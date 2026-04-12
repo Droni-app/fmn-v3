@@ -52,7 +52,7 @@ import imgRcp from '@/assets/ejes/taller-rcp.jpg'
             class="rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
             <img :src="`/img/talleres/${taller.slug}.jpg`" :alt="taller.name" class="w-full h-48 object-cover" />
-            <div class="p-4">
+            <div class="p-4 bg-white dark:bg-gray-800">
               <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100">{{ taller.name }}</h4>
             </div>
           </div>

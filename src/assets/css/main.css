@@ -4,3 +4,16 @@
 .poppins {
   font-family: "Poppins", sans-serif;
 }
+
+/* Previene franjas blancas fuera del wrapper de Vue */
+html,
+body {
+  background-color: white;
+}
+
+.dark html,
+.dark body,
+html.dark,
+html.dark body {
+  background-color: #111827; /* gray-900 */
+}

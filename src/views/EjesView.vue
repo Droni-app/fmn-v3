@@ -11,9 +11,9 @@ import imgPadrino from '@/assets/ejes/padrino.webp'
         <RouterLink to="/ejes/preventivo">
           <img :src="imgAsalvoEjes" alt="Eje Preventivo" class="w-full h-72 object-cover hover:scale-105 transition-transform duration-500" />
         </RouterLink>
-        <div class="p-6">
+        <div class="p-6 bg-white dark:bg-gray-800">
           <RouterLink to="/ejes/preventivo">
-            <h2 class="text-2xl text-rose-600 hover:underline font-semibold mb-3">ASALVO – Eje Preventivo</h2>
+            <h2 class="text-2xl text-rose-600 dark:text-rose-400 hover:underline font-semibold mb-3">ASALVO – Eje Preventivo</h2>
           </RouterLink>
           <p class="text-gray-700 dark:text-gray-300">
             Honrar la memoria de Mariana al contribuir a una sociedad consciente y con mayor atención en la población infantil.
@@ -24,9 +24,9 @@ import imgPadrino from '@/assets/ejes/padrino.webp'
         <RouterLink to="/ejes/social">
           <img :src="imgPadrino" alt="Eje Social" class="w-full h-72 object-cover hover:scale-105 transition-transform duration-500" />
         </RouterLink>
-        <div class="p-6">
+        <div class="p-6 bg-white dark:bg-gray-800">
           <RouterLink to="/ejes/social">
-            <h2 class="text-2xl text-rose-600 hover:underline font-semibold mb-3">EJE SOCIAL</h2>
+            <h2 class="text-2xl text-rose-600 dark:text-rose-400 hover:underline font-semibold mb-3">EJE SOCIAL</h2>
           </RouterLink>
           <p class="text-gray-700 dark:text-gray-300">
             Apoyamos la formación y bienestar de 120 niños, niñas y adolescentes de los barrios Altos de Serrezuela, Lomitas, Capilla, Aurora Alta y Aurora Baja en Bogotá.

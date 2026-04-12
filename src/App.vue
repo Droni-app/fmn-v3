@@ -5,8 +5,10 @@ import DonateButton from '@/components/DonateButton.vue'
 </script>
 
 <template>
-  <DonateButton />
-  <MainNav />
-  <RouterView />
-  <MainFoot />
+  <div class="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <DonateButton />
+    <MainNav />
+    <RouterView />
+    <MainFoot />
+  </div>
 </template>

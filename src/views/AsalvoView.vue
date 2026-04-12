@@ -6,7 +6,7 @@ import imgDesahogate from '@/assets/asalvo/desahogate.png'
 import imgVisitaWeb from '@/assets/asalvo/visita-web.png'
 
 const tips = Array.from({ length: 5 }, (_, i) =>
-  new URL(`../assets/img/asalvo/0${i + 1}.png`, import.meta.url).href,
+  new URL(`../assets/asalvo/0${i + 1}.png`, import.meta.url).href,
 )
 </script>
 
@@ -53,7 +53,7 @@ const tips = Array.from({ length: 5 }, (_, i) =>
       <div class="container mx-auto max-w-6xl">
         <h2 class="text-4xl md:text-5xl font-bold text-center text-blue-700 dark:text-blue-400 mb-12">Valores</h2>
         <div class="grid md:grid-cols-3 gap-8 mb-12">
-          <div v-for="item in [{ color: 'bg-blue-500', label: 'Concientizar', textColor: 'text-blue-700' }, { color: 'bg-cyan-500', label: 'Prevenir', textColor: 'text-cyan-700' }, { color: 'bg-teal-500', label: 'Rescatar', textColor: 'text-teal-700' }]" :key="item.label" class="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-8 text-center hover:scale-105 transition-transform duration-300">
+          <div v-for="item in [{ color: 'bg-blue-500', label: 'Concientizar', textColor: 'text-blue-700 dark:text-blue-300' }, { color: 'bg-cyan-500', label: 'Prevenir', textColor: 'text-cyan-700 dark:text-cyan-300' }, { color: 'bg-teal-500', label: 'Rescatar', textColor: 'text-teal-700 dark:text-teal-300' }]" :key="item.label" class="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-8 text-center hover:scale-105 transition-transform duration-300">
             <div :class="['w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4', item.color]">
               <i class="mdi mdi-shield-check text-white text-4xl" />
             </div>
