@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting...</title>
+    <script>
+      const { origin, pathname, search, hash } = window.location
+      const pathSegments = pathname.split('/').filter(Boolean)
+      const isProjectSite = pathSegments.length > 1
+      const basePath = isProjectSite ? `/${pathSegments[0]}/` : '/'
+      const routePath = isProjectSite ? `/${pathSegments.slice(1).join('/')}` : pathname
+      const searchValue = search.startsWith('?') ? search.slice(1) : search
+      const redirectUrl = new URL(basePath, origin)
+
+      redirectUrl.searchParams.set('p', routePath || '/')
+
+      if (searchValue) {
+        redirectUrl.searchParams.set('q', searchValue)
+      }
+
+      redirectUrl.hash = hash
+      window.location.replace(redirectUrl.toString())
+    </script>
+  </head>
+  <body></body>
+</html>
