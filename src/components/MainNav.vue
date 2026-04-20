@@ -9,7 +9,7 @@ const isMenuOpen = ref(false)
 const menu = [
   { name: 'Proyectos', link: '/ejes' },
   { name: 'Plan Padrino', link: '/plan-padrino' },
-  { name: 'Asalvo', link: '/asalvo' },
+  { name: 'Ahogamiento', link: '/asalvo' },
   { name: 'Congreso', link: '/congreso' },
   { name: 'Talleres', link: '/talleres' },
   { name: 'Voluntariado', link: '/voluntariado' },
