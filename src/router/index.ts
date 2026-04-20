@@ -10,6 +10,7 @@ const router = createRouter({
     { path: '/contacto', component: () => import('@/views/ContactoView.vue') },
     { path: '/donar', component: () => import('@/views/DonarView.vue') },
     { path: '/ejes', component: () => import('@/views/EjesView.vue') },
+    { path: '/plan-padrino', component: () => import('@/views/PlanPadrinoView.vue') },
     { path: '/ejes/preventivo', component: () => import('@/views/EjesPreventivView.vue') },
     { path: '/ejes/social', component: () => import('@/views/EjesSocialView.vue') },
     { path: '/noticias', component: () => import('@/views/NoticiasView.vue') },
