@@ -1,6 +1,16 @@
 <script setup lang="ts">
 import imgPresencial from '@/assets/voluntariado/vpresencial.webp'
-import imgCorporativo from '@/assets/voluntariado/vcorporativo.webp'
+
+const videos = [
+  'lhxEtdr_2Ko',
+  'YIlrgrF3UcY',
+  'VU7XEfiiPpU',
+  'Salls67GZII',
+  'Cx050LQmT5Q',
+  'YD7i9dGPZ8I',
+  'T7UtB7aEAYM',
+  'HGaZ05ZWpDE',
+]
 </script>
 
 <template>
@@ -46,7 +56,27 @@ import imgCorporativo from '@/assets/voluntariado/vcorporativo.webp'
           </RouterLink>
         </div>
         <div class="order-1 md:order-2">
-          <img :src="imgCorporativo" alt="Voluntariado Corporativo" class="rounded-lg shadow-xl w-full" />
+          <img src="/img/voluntariado/VOLUNTARIADO-CORP.jpg" alt="Voluntariado Corporativo" class="rounded-lg shadow-xl w-full" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Galería de videos -->
+    <section class="bg-gray-900 py-16 px-4">
+      <div class="container mx-auto max-w-6xl">
+        <h2 class="text-center text-3xl md:text-4xl font-extrabold text-white mb-2">Galería de Videos</h2>
+        <p class="text-center text-purple-400 font-semibold mb-10 tracking-wide uppercase text-sm">Voluntariado</p>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div v-for="video in videos" :key="video">
+            <iframe
+              :src="`https://www.youtube.com/embed/${video}`"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              class="w-full rounded-xl shadow-lg"
+              style="aspect-ratio: 9/16"
+            />
+          </div>
         </div>
       </div>
     </section>

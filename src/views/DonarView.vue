@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import imgPlanPadrino from '@/assets/donar/planpadrino.webp'
-import imgRedAmigos from '@/assets/donar/redamigos.webp'
 import imgRopero from '@/assets/donar/ropero.png'
 
 const sections = [
@@ -8,7 +6,7 @@ const sections = [
     title: 'Plan padrino',
     description: '¿Quieres ser Madrina o Padrino de uno de nuestros niños? Con un aporte mensual contribuirás con su formación artística, deportiva y acompañamiento psicosocial, brindando mejores oportunidades durante su proceso de crecimiento.',
     cta: '¡Únete, una pequeña ayuda por una gran experiencia a su lado!',
-    image: imgPlanPadrino,
+    image: '/img/donar/PP-NINOS.jpg',
     alt: 'Plan Padrino',
     reverse: false,
   },
@@ -16,7 +14,7 @@ const sections = [
     title: 'Red de amigos',
     description: '¿Quieres ser parte de una gran red de ayuda para nuestra organización? ¡Apoya nuestro Proyecto Social en Altos de Serrezuela desde $1.000 en adelante!',
     cta: '¡Vincúlate y sé amigo de la Fundación Mariana Novoa!',
-    image: imgRedAmigos,
+    image: '/img/donar/SIBYL.jpg',
     alt: 'Red de Amigos',
     reverse: true,
   },
