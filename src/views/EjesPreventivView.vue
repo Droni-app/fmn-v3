@@ -9,17 +9,12 @@ import img8000Personas from '@/assets/ejes/8000-personas.webp'
 
 <template>
   <section>
-    <header
-      class="bg-cover bg-center"
-      style="background-image: url('/img/banners/eje-preventivo.jpg')"
-    >
-      <div class="container mx-auto py-36 px-4">
-        <h2 class="font-extrabold text-5xl text-amber-400">PROPÓSITO SUPERIOR</h2>
-        <h3 class="text-3xl lg:w-2/3 text-white mt-6">
-          Honrar la memoria de Mariana al contribuir a una sociedad consciente y con mayor atención
-          en la población infantil.
-        </h3>
-      </div>
+    <header>
+      <img
+        src="/img/banners/eje-preventivov2.webp"
+        alt="Eje Preventivo"
+        class="w-full h-auto object-cover"
+      />
     </header>
 
     <article>
@@ -44,6 +39,22 @@ import img8000Personas from '@/assets/ejes/8000-personas.webp'
         <h3 class="text-center font-extrabold text-4xl text-gray-800 dark:text-gray-100 mb-8">
           Talleres
         </h3>
+        <div
+          class="my-16 rounded-2xl bg-rose-50 dark:bg-gray-800 border border-rose-100 dark:border-gray-700 px-8 py-10 text-center max-w-3xl mx-auto shadow-sm"
+        >
+          <p
+            class="text-rose-600 dark:text-rose-400 font-bold text-xl mb-4 tracking-wide uppercase"
+          >
+            Capacítate, actúa y protege.
+          </p>
+          <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed">
+            Cada minuto puede hacer la diferencia en una emergencia. Por eso hemos creado un
+            portafolio de talleres y cursos diseñados para que aprendas de manera práctica y
+            sencilla a prevenir accidentes, actuar en situaciones de riesgo y proteger vidas.
+            Conviértete en el primer eslabón de la cadena preventiva y promueve una cultura de
+            seguridad en tu entorno.
+          </p>
+        </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div
             v-for="taller in talleres"

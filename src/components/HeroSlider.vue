@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import bannerLanzamiento from '@/assets/congreso/2026/banner-lanzamiento.webp'
+import bannerLanzamientov2 from '@/assets/congreso/2026/banner-lanzamientov2.webp'
 
 interface Slide {
   image: string
@@ -9,7 +9,7 @@ interface Slide {
 }
 
 const slides: Slide[] = [
-  { image: bannerLanzamiento, link: '/congreso' },
+  { image: bannerLanzamientov2, link: '/congreso' },
   { image: '/img/slides/02.webp', link: 'https://checkout.wompi.co/l/VPOS_2DN3Dr' },
   { image: '/img/slides/03.png', link: '/' },
 ]
@@ -55,11 +55,22 @@ onUnmounted(() => {
       >
         <component
           :is="isExternal(slide.link) ? 'a' : 'RouterLink'"
-          v-bind="isExternal(slide.link) ? { href: slide.link, target: '_blank', rel: 'noopener noreferrer' } : { to: slide.link }"
+          v-bind="
+            isExternal(slide.link)
+              ? { href: slide.link, target: '_blank', rel: 'noopener noreferrer' }
+              : { to: slide.link }
+          "
           class="block w-full h-full group"
         >
-          <img :src="slide.image" :alt="slide.title ?? 'Slide'" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-          <div v-if="slide.title" class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end">
+          <img
+            :src="slide.image"
+            :alt="slide.title ?? 'Slide'"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div
+            v-if="slide.title"
+            class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end"
+          >
             <div class="container mx-auto px-6 pb-10">
               <h2 class="text-3xl md:text-5xl font-bold text-white">{{ slide.title }}</h2>
             </div>
@@ -101,6 +112,9 @@ onUnmounted(() => {
     </div>
 
     <!-- Progress bar -->
-    <div class="absolute bottom-0 left-0 h-1 bg-rose-500 z-20 transition-all duration-100 ease-linear" :style="{ width: `${progress}%` }" />
+    <div
+      class="absolute bottom-0 left-0 h-1 bg-rose-500 z-20 transition-all duration-100 ease-linear"
+      :style="{ width: `${progress}%` }"
+    />
   </section>
 </template>

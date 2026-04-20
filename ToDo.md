@@ -1,6 +1,16 @@
 # ToDo
 
-Documento vivo con posibles mejoras para el sitio de la Fundacion Mariana Novoa.
+## Resources
+
+Listado de cambios:
+https://docs.google.com/document/d/1pddJVvVPakO-chKT9YbVcmrr0HXz6PeK/edit
+https://docs.google.com/document/d/1pddJVvVPakO-chKT9YbVcmrr0HXz6PeK/edit (nuevo)
+Drive Files:
+https://drive.google.com/drive/folders/1Uc5SI5B8o4yyV_jzmkxveW3psfjrNO-1
+
+# Ajustes
+
+13. QUITAR ESTA IMAGEN Y ACTUALIZARLA (FALTA)
 
 ## Prioridad alta
 
