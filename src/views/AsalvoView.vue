@@ -9,7 +9,6 @@ onMounted(() => {
 })
 import imgOpes from '@/assets/asalvo/opes.jpg'
 import imgDesahogate from '@/assets/asalvo/desahogate.png'
-import imgVisitaWeb from '@/assets/asalvo/visita-web.png'
 </script>
 
 <template>
@@ -172,13 +171,19 @@ import imgVisitaWeb from '@/assets/asalvo/visita-web.png'
     <!-- Salvamento Acuático -->
     <section class="py-16 px-4 bg-white dark:bg-gray-900">
       <div class="container mx-auto max-w-6xl grid md:grid-cols-2 gap-12 items-center">
-        <img src="/img/talleres/v2/CAP08.png" alt="Taller de Salvamento Acuático" class="rounded-lg shadow-xl w-full" />
+        <img
+          src="/img/talleres/v2/CAP08.png"
+          alt="Taller de Salvamento Acuático"
+          class="rounded-lg shadow-xl w-full"
+        />
         <div>
           <h2 class="text-3xl md:text-4xl font-bold text-blue-700 dark:text-blue-400 mb-6">
             Taller de Salvamento Acuático – Actualización
           </h2>
           <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
-            Capacitación de actualización para salvavidas, socorristas y personal de seguridad acuática. Refuerza técnicas de rescate, primeros auxilios acuáticos y uso de equipos especializados.
+            Capacitación de actualización para salvavidas, socorristas y personal de seguridad
+            acuática. Refuerza técnicas de rescate, primeros auxilios acuáticos y uso de equipos
+            especializados.
           </p>
           <RouterLink
             to="/contacto"

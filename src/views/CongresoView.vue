@@ -1,4 +1,29 @@
+<script setup lang="ts">
+import bannerCongreso from '@/assets/congreso/2026/banner-lanzamientov2.webp'
+
+const videos = [
+  'XZT3xdEQ6Hs', // lanzamiento 4ta edición — primero
+  '9Hyzb3WYT1Y',
+  'CzX0EpiXktA',
+  'cFveqPbSf34',
+  'Wr94esKErdA',
+  '4XADq6sINyU',
+  'ExmuwZaj2h0',
+  '2GKFeAlAV3c',
+  '8NcAx5y8oJQ',
+  'nEVXSbYkKs0',
+  'gtZnQ4c-UgU',
+  '4VW-zqIndP4',
+  'LfW5ndScdyI',
+  'u7dMewqXo3o',
+  'XhUGtveUJsg',
+  'HfHqWiWXPoI',
+  'DmvhE9VqZ-0',
+]
+</script>
+
 <template>
+  <img :src="bannerCongreso" alt="Congreso Internacional" class="w-full h-auto" />
   <section class="relative min-h-screen overflow-hidden bg-[#1f2c86] text-white">
     <div class="absolute inset-0 bg-gradient-to-b from-[#2f5fae] via-[#273d98] to-[#1f2c86]" />
     <div class="congreso-wave wave-a" />
@@ -87,6 +112,26 @@
           <p class="text-4xl font-extrabold text-[#f5c638] sm:text-5xl">Piscilago Colsubsidio <span class="text-[#61d3f3]">Nilo, Cundinamarca</span></p>
         </div>
       </section>
+    </div>
+  </section>
+
+  <!-- Galería de videos -->
+  <section class="bg-[#0d1f6e] py-16 px-4">
+    <div class="container mx-auto max-w-6xl">
+      <h2 class="text-center text-3xl md:text-4xl font-extrabold text-white mb-2">Galería de Videos</h2>
+      <p class="text-center text-[#61d3f3] font-semibold mb-10 tracking-wide uppercase text-sm">Congreso Internacional</p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div v-for="video in videos" :key="video">
+          <iframe
+            :src="`https://www.youtube.com/embed/${video}`"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            class="w-full rounded-xl shadow-lg"
+            style="aspect-ratio: 9/16"
+          />
+        </div>
+      </div>
     </div>
   </section>
 </template>
