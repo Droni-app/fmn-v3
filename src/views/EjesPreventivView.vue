@@ -55,21 +55,48 @@ import img8000Personas from '@/assets/ejes/8000-personas.webp'
             seguridad en tu entorno.
           </p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div
             v-for="taller in talleres"
             :key="taller.slug"
-            class="rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+            class="flex flex-col rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 bg-white dark:bg-gray-800"
           >
             <img
-              :src="`/img/talleres/${taller.slug}.jpg`"
+              :src="`/img/talleres/v2/${taller.slug}.png`"
               :alt="taller.name"
-              class="w-full h-48 object-cover"
+              class="w-full object-cover"
             />
-            <div class="p-4 bg-white dark:bg-gray-800">
-              <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100">
+            <div class="flex flex-col flex-1 p-5 gap-3">
+              <h4 class="text-base font-bold text-gray-800 dark:text-gray-100 leading-snug">
                 {{ taller.name }}
               </h4>
+              <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed flex-1">
+                {{ taller.description }}
+              </p>
+              <div class="flex flex-col gap-1 text-sm mt-auto pt-3 border-t border-gray-100 dark:border-gray-700">
+                <span class="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                  <i class="mdi mdi-clock-outline text-rose-500" />
+                  {{ taller.duration }}
+                </span>
+                <span class="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                  <i class="mdi mdi-map-marker-outline text-rose-500" />
+                  {{ taller.modality }}
+                </span>
+                <span v-if="taller.certification" class="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                  <i class="mdi mdi-certificate-outline text-rose-500" />
+                  {{ taller.certification }}
+                </span>
+                <ul v-if="taller.extra" class="mt-1 flex flex-col gap-1">
+                  <li
+                    v-for="item in taller.extra"
+                    :key="item"
+                    class="flex items-start gap-2 text-rose-600 dark:text-rose-400 text-xs font-medium"
+                  >
+                    <i class="mdi mdi-gift-outline mt-0.5" />
+                    {{ item }}
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
