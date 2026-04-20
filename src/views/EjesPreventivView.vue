@@ -110,6 +110,7 @@ import img8000Personas from '@/assets/ejes/8000-personas.webp'
           </RouterLink>
         </div>
       </div>
+      <img src="/img/talleres/v2/CULTURA-PREVENTIVA.png" alt="Cultura Preventiva" class="w-full h-auto" />
     </article>
   </section>
 </template>

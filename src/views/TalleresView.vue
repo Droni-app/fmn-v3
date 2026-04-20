@@ -58,5 +58,6 @@ import { talleres } from '@/services/talleres'
         </div>
       </div>
     </div>
+    <img src="/img/talleres/v2/CULTURA-PREVENTIVA.png" alt="Cultura Preventiva" class="w-full h-auto" />
   </section>
 </template>
