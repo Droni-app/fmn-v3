@@ -81,6 +81,32 @@ npm run dev
 npm run build
 ```
 
+## Despliegue con Docker Compose
+
+Si quieres desplegar el sitio en un host con Docker sin construir una imagen propia, el repositorio incluye [docker-compose.yml](docker-compose.yml) y [nginx/default.conf](nginx/default.conf).
+
+La solucion usa solo imagenes oficiales:
+
+- `node:22-alpine` para ejecutar `npm ci` y `npm run build`
+- `nginx:alpine` para servir el contenido estatico generado
+
+Levanta el sitio con:
+
+```sh
+docker compose up -d
+```
+
+El sitio quedara publicado en el puerto `8080` del host.
+
+Si necesitas otro puerto, cambia el mapeo en `docker-compose.yml`:
+
+```yaml
+ports:
+  - '80:80'
+```
+
+Nota: esto evita hacer `docker build` para crear una imagen personalizada, pero igual ejecuta el build de Vite dentro del contenedor antes de servir la SPA.
+
 ### Lint with [ESLint](https://eslint.org/)
 
 ```sh
