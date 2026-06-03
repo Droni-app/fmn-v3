@@ -15,11 +15,15 @@ services:
     depends_on:
       build-assets:
         condition: service_completed_successfully
-    ports:
-      - '8080:80'
     volumes:
       - dist_data:/usr/share/nginx/html:ro
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    network_mode: bridge
+    environment:
+      - VIRTUAL_HOST=mariananovoa.org,www.mariananovoa.org
+      - VIRTUAL_PORT=80
+      - LETSENCRYPT_HOST=mariananovoa.org,www.mariananovoa.org
+      - LETSENCRYPT_EMAIL=dev@droni.co
     restart: unless-stopped
 
 volumes:
