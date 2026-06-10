@@ -18,6 +18,7 @@ const router = createRouter({
     { path: '/tienda', component: () => import('@/views/TiendaView.vue') },
     { path: '/transparencia', component: () => import('@/views/TransparenciaView.vue') },
     { path: '/voluntariado', component: () => import('@/views/VoluntariadoView.vue') },
+    { path: '/:pathMatch(.*)*', component: () => import('@/views/NotFoundView.vue') },
   ],
 })
 
