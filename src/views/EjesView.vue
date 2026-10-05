@@ -1,38 +1,60 @@
 <script setup lang="ts">
+import PageHero from '@/components/PageHero.vue'
 import imgAsalvoEjes from '@/assets/ejes/asalvo-ejes.webp'
 import imgPadrino from '@/assets/ejes/padrino.webp'
+
+const proyectos = [
+  {
+    to: '/ejes/preventivo',
+    image: imgAsalvoEjes,
+    tag: 'Eje preventivo',
+    title: 'ASALVO – Prevención',
+    text: 'Honrar la memoria de Mariana al contribuir a una sociedad consciente y con mayor atención en la población infantil.',
+  },
+  {
+    to: '/ejes/social',
+    image: imgPadrino,
+    tag: 'Eje social',
+    title: 'Proyecto social',
+    text: 'Apoyamos la formación y bienestar de 120 niños, niñas y adolescentes de los barrios Altos de Serrezuela, Lomitas, Capilla, Aurora Alta y Aurora Baja en Bogotá.',
+  },
+]
 </script>
 
 <template>
-  <div class="container mx-auto px-4 py-12">
-    <h1 class="text-4xl font-bold text-rose-400 text-center mb-10 poppins">Nuestros Proyectos</h1>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div class="rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
-        <RouterLink to="/ejes/preventivo">
-          <img :src="imgAsalvoEjes" alt="Eje Preventivo" class="w-full h-72 object-cover hover:scale-105 transition-transform duration-500" />
-        </RouterLink>
-        <div class="p-6 bg-white dark:bg-gray-800">
-          <RouterLink to="/ejes/preventivo">
-            <h2 class="text-2xl text-rose-600 dark:text-rose-400 hover:underline font-semibold mb-3">ASALVO – Eje Preventivo</h2>
-          </RouterLink>
-          <p class="text-gray-700 dark:text-gray-300">
-            Honrar la memoria de Mariana al contribuir a una sociedad consciente y con mayor atención en la población infantil.
-          </p>
+  <div>
+    <PageHero
+      eyebrow="Proyectos"
+      title="Nuestros proyectos"
+      subtitle="Dos ejes de trabajo para proteger la vida y abrir nuevas oportunidades a la infancia."
+    />
+    <section class="section-y container-page grid gap-8 md:grid-cols-2">
+      <RouterLink
+        v-for="(p, i) in proyectos"
+        :key="p.to"
+        v-reveal="i * 150"
+        :to="p.to"
+        class="card card-hover group overflow-hidden"
+      >
+        <div class="overflow-hidden">
+          <img
+            :src="p.image"
+            :alt="p.title"
+            class="aspect-[16/9] w-full object-cover transition duration-700 group-hover:scale-105"
+          />
         </div>
-      </div>
-      <div class="rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
-        <RouterLink to="/ejes/social">
-          <img :src="imgPadrino" alt="Eje Social" class="w-full h-72 object-cover hover:scale-105 transition-transform duration-500" />
-        </RouterLink>
-        <div class="p-6 bg-white dark:bg-gray-800">
-          <RouterLink to="/ejes/social">
-            <h2 class="text-2xl text-rose-600 dark:text-rose-400 hover:underline font-semibold mb-3">EJE SOCIAL</h2>
-          </RouterLink>
-          <p class="text-gray-700 dark:text-gray-300">
-            Apoyamos la formación y bienestar de 120 niños, niñas y adolescentes de los barrios Altos de Serrezuela, Lomitas, Capilla, Aurora Alta y Aurora Baja en Bogotá.
-          </p>
+        <div class="p-8">
+          <span class="chip">{{ p.tag }}</span>
+          <h2 class="mt-4 text-2xl font-extrabold text-plum-800 md:text-3xl">{{ p.title }}</h2>
+          <p class="mt-3 leading-relaxed text-ink/70">{{ p.text }}</p>
+          <span
+            class="mt-6 inline-flex items-center gap-2 font-display font-semibold text-brand-600"
+          >
+            Conocer más
+            <i class="mdi mdi-arrow-right transition-transform group-hover:translate-x-1.5" />
+          </span>
         </div>
-      </div>
-    </div>
+      </RouterLink>
+    </section>
   </div>
 </template>

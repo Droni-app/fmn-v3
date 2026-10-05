@@ -1,65 +1,96 @@
 <script setup lang="ts">
-import imgRopero from '@/assets/donar/ropero.png'
+import CtaBand from '@/components/CtaBand.vue'
+import MediaSplit from '@/components/MediaSplit.vue'
+import PageHero from '@/components/PageHero.vue'
+import { contact, links, pub, whatsappMessage } from '@/services/site'
+import imgRopero from '@/assets/donar/ropero.webp'
 
 const sections = [
   {
+    eyebrow: 'Apadrina',
     title: 'Plan padrino',
-    description: '¿Quieres ser Madrina o Padrino de uno de nuestros niños? Con un aporte mensual contribuirás con su formación artística, deportiva y acompañamiento psicosocial, brindando mejores oportunidades durante su proceso de crecimiento.',
+    description:
+      '¿Quieres ser Madrina o Padrino de uno de nuestros niños? Con un aporte mensual contribuirás con su formación artística, deportiva y acompañamiento psicosocial, brindando mejores oportunidades durante su proceso de crecimiento.',
     cta: '¡Únete, una pequeña ayuda por una gran experiencia a su lado!',
-    image: '/img/donar/PP-NINOS.jpg',
-    alt: 'Plan Padrino',
-    reverse: false,
+    image: pub('/img/donar/PP-NINOS.webp'),
+    message: 'Hola, quiero ser parte del Plan Padrino',
   },
   {
+    eyebrow: 'Súmate',
     title: 'Red de amigos',
-    description: '¿Quieres ser parte de una gran red de ayuda para nuestra organización? ¡Apoya nuestro Proyecto Social en Altos de Serrezuela desde $1.000 en adelante!',
+    description:
+      '¿Quieres ser parte de una gran red de ayuda para nuestra organización? ¡Apoya nuestro Proyecto Social en Altos de Serrezuela desde $1.000 en adelante!',
     cta: '¡Vincúlate y sé amigo de la Fundación Mariana Novoa!',
-    image: '/img/donar/SIBYL.jpg',
-    alt: 'Red de Amigos',
-    reverse: true,
+    image: pub('/img/donar/SIBYL.webp'),
+    message: 'Hola, quiero ser parte de la Red de Amigos',
   },
   {
+    eyebrow: 'Dona en especie',
     title: 'Ropero',
-    description: '¿Tienes ropa o elementos que ya no uses y estén en buen estado? Dónalos y dales una segunda oportunidad.',
+    description:
+      '¿Tienes ropa o elementos que ya no uses y estén en buen estado? Dónalos y dales una segunda oportunidad.',
     cta: null,
     image: imgRopero,
-    alt: 'Ropero',
-    reverse: false,
+    message: 'Hola, quiero donar ropa o elementos al Ropero',
   },
 ]
 </script>
 
 <template>
   <div>
-    <section class="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-16 px-4">
-      <div class="container mx-auto max-w-4xl text-center">
-        <h1 class="text-4xl md:text-5xl font-bold">Formas de Donar</h1>
-      </div>
-    </section>
+    <PageHero
+      eyebrow="Tu aporte transforma vidas"
+      title="Formas de donar"
+      subtitle="Con tu ayuda, 120 niños, niñas y adolescentes de Altos de Serrezuela acceden a arte, deporte y acompañamiento psicosocial."
+    >
+      <a :href="links.donate" target="_blank" rel="noopener" class="btn btn-light">
+        <i class="mdi mdi-heart text-brand-500" /> Donar en línea
+      </a>
+    </PageHero>
 
     <section
       v-for="(s, i) in sections"
       :key="s.title"
-      :class="['py-16 px-4', i % 2 === 1 ? 'bg-gray-50 dark:bg-gray-800' : 'bg-white dark:bg-gray-900']"
+      :class="['section-y', i % 2 === 1 && 'bg-white']"
     >
-      <div class="container mx-auto max-w-6xl grid md:grid-cols-2 gap-12 items-center">
-        <div :class="s.reverse ? 'order-2 md:order-1' : ''">
-          <h2 class="text-3xl md:text-4xl font-bold text-purple-700 dark:text-purple-400 mb-6">{{ s.title }}</h2>
-          <p class="text-lg text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">{{ s.description }}</p>
-          <p v-if="s.cta" class="text-lg font-semibold text-pink-600 dark:text-pink-400 mb-8">{{ s.cta }}</p>
-          <div class="flex flex-wrap gap-4">
-            <a href="https://wa.me/573164284175" target="_blank" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">
-              Quiero ser parte
+      <div class="container-page">
+        <MediaSplit
+          :image="s.image"
+          :alt="s.title"
+          :reverse="i % 2 === 1"
+          :eyebrow="s.eyebrow"
+          :title="s.title"
+        >
+          <p class="prose-body">{{ s.description }}</p>
+          <p v-if="s.cta" class="mt-4 font-display text-lg font-semibold text-brand-600">
+            {{ s.cta }}
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a
+              :href="whatsappMessage(s.message)"
+              target="_blank"
+              rel="noopener"
+              class="btn btn-whatsapp"
+            >
+              <i class="mdi mdi-whatsapp text-xl" /> Quiero ser parte
             </a>
-            <a href="https://donaronline.org/fundacion-mariana-novoa/red-de-amigos-fundacion-mariana-novoa" target="_blank" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">
-              Quiero donar
+            <a :href="links.donateOnline" target="_blank" rel="noopener" class="btn btn-primary">
+              <i class="mdi mdi-heart" /> Quiero donar
             </a>
           </div>
-        </div>
-        <div :class="s.reverse ? 'order-1 md:order-2' : ''">
-          <img :src="s.image" :alt="s.alt" class="rounded-lg shadow-xl w-full" />
-        </div>
+        </MediaSplit>
       </div>
     </section>
+
+    <CtaBand
+      eyebrow="¿Tienes dudas?"
+      title="Hablemos sobre cómo puedes ayudar"
+      subtitle="Te contamos el destino de tu aporte y otras formas de vincularte."
+    >
+      <a :href="contact.whatsapp" target="_blank" rel="noopener" class="btn btn-whatsapp">
+        <i class="mdi mdi-whatsapp text-xl" /> Escríbenos
+      </a>
+      <RouterLink to="/transparencia" class="btn btn-ghost">Ver transparencia</RouterLink>
+    </CtaBand>
   </div>
 </template>

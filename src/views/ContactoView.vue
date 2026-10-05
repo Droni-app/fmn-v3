@@ -1,128 +1,217 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import PageHero from '@/components/PageHero.vue'
+import { contact, socials, whatsappMessage } from '@/services/site'
 
 const contactOptions = [
-  { value: 'talleres', label: 'Talleres', icon: 'mdi-school' },
-  { value: 'voluntariado', label: 'Voluntariado', icon: 'mdi-account-group-outline' },
-  { value: 'tienda', label: 'Tienda', icon: 'mdi-shopping' },
-  { value: 'otro', label: 'Otro', icon: 'mdi-help-circle' },
+  { value: 'Talleres', icon: 'mdi-school-outline' },
+  { value: 'Voluntariado', icon: 'mdi-account-group-outline' },
+  { value: 'Donaciones', icon: 'mdi-heart-outline' },
+  { value: 'Tienda', icon: 'mdi-shopping-outline' },
+  { value: 'Congreso', icon: 'mdi-microphone-outline' },
+  { value: 'Otro', icon: 'mdi-help-circle-outline' },
 ]
 
-const form = ref({ tipo: 'otro', nombre: '', email: '', telefono: '', mensaje: '' })
+const fields = [
+  {
+    id: 'nombre',
+    label: 'Nombre',
+    type: 'text',
+    placeholder: 'Tu nombre completo',
+    required: true,
+  },
+  { id: 'email', label: 'Email', type: 'email', placeholder: 'tu@email.com', required: true },
+  {
+    id: 'telefono',
+    label: 'Teléfono',
+    type: 'tel',
+    placeholder: '+57 3XX XXX XXXX',
+    required: false,
+  },
+] as const
+
+const empty = () => ({ tipo: 'Otro', nombre: '', email: '', telefono: '', mensaje: '' })
+const form = ref(empty())
+const sent = ref(false)
 
 const handleSubmit = () => {
-  const tipoLabel = contactOptions.find(o => o.value === form.value.tipo)?.label ?? form.value.tipo
-  const text = encodeURIComponent(
-    `*Tipo:* ${tipoLabel}\n*Nombre:* ${form.value.nombre}\n*Email:* ${form.value.email}\n*Teléfono:* ${form.value.telefono}\n\n*Mensaje:*\n${form.value.mensaje}`
-  )
-  window.open(`https://wa.me/573164284175?text=${text}`, '_blank')
-  form.value = { tipo: 'otro', nombre: '', email: '', telefono: '', mensaje: '' }
+  const f = form.value
+  const text = `*Tipo:* ${f.tipo}\n*Nombre:* ${f.nombre}\n*Email:* ${f.email}\n*Teléfono:* ${f.telefono}\n\n*Mensaje:*\n${f.mensaje}`
+  window.open(whatsappMessage(text), '_blank')
+  form.value = empty()
+  sent.value = true
 }
+
+const inputClass =
+  'w-full rounded-2xl border-0 bg-cream px-4 py-3.5 text-ink ring-1 ring-plum-100 transition placeholder:text-ink/40 focus:bg-white focus:ring-2 focus:ring-brand-400 focus:outline-none'
 </script>
 
 <template>
   <div>
-    <section class="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-16 px-4">
-      <div class="container mx-auto max-w-4xl text-center">
-        <h1 class="text-4xl md:text-5xl font-bold mb-4">Ponte en Contacto</h1>
-        <p class="text-lg text-white/90 max-w-2xl mx-auto">
-          ¿Tienes preguntas sobre nuestros programas? ¿Quieres donar, ser voluntario o acceder a nuestra tienda? Estamos aquí para ayudarte.
-        </p>
-      </div>
-    </section>
+    <PageHero
+      eyebrow="Estamos para ayudarte"
+      title="Ponte en contacto"
+      subtitle="¿Tienes preguntas sobre nuestros programas? ¿Quieres donar, ser voluntario o acceder a nuestra tienda?"
+    />
 
-    <section class="py-16 px-4 bg-white dark:bg-gray-900">
-      <div class="container mx-auto max-w-6xl grid md:grid-cols-2 gap-12">
+    <section class="container-page -mt-12 pb-16 md:-mt-20 md:pb-24">
+      <div class="grid gap-8 lg:grid-cols-[1.5fr_1fr]">
+        <div v-reveal class="card p-6 sm:p-10">
+          <h2 class="text-2xl font-extrabold text-plum-800 md:text-3xl">Envíanos un mensaje</h2>
+          <p class="mt-2 text-ink/60">Te responderemos por WhatsApp lo antes posible.</p>
 
-        <!-- Formulario -->
-        <div>
-          <h2 class="text-3xl font-bold text-purple-700 dark:text-purple-400 mb-8">Envíanos un Mensaje</h2>
+          <Transition
+            enter-active-class="transition duration-300"
+            enter-from-class="opacity-0 -translate-y-2"
+          >
+            <p
+              v-if="sent"
+              role="status"
+              class="mt-6 flex items-center gap-3 rounded-2xl bg-emerald-50 p-4 font-semibold text-emerald-700"
+            >
+              <i class="mdi mdi-check-circle text-2xl" />
+              ¡Gracias! Abrimos WhatsApp con tu mensaje listo para enviar.
+            </p>
+          </Transition>
 
-          <!-- Tipo de contacto -->
-          <div class="mb-8">
-            <p class="text-sm font-bold text-purple-700 dark:text-purple-400 mb-4">¿En qué podemos ayudarte?</p>
-            <div class="grid grid-cols-2 gap-3">
-              <button
-                v-for="opt in contactOptions"
-                :key="opt.value"
-                :class="[
-                  'flex flex-col items-center justify-center p-4 rounded-lg border-2 transition-all',
-                  form.tipo === opt.value
-                    ? 'border-purple-600 bg-purple-50 dark:bg-purple-900/30'
-                    : 'border-gray-300 dark:border-gray-600 hover:border-purple-300',
-                ]"
-                @click="form.tipo = opt.value"
+          <form class="mt-8 space-y-6" @submit.prevent="handleSubmit">
+            <fieldset>
+              <legend class="mb-3 text-sm font-bold text-plum-700">
+                ¿En qué podemos ayudarte?
+              </legend>
+              <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                <label
+                  v-for="opt in contactOptions"
+                  :key="opt.value"
+                  :class="[
+                    'flex cursor-pointer items-center gap-3 rounded-2xl p-3.5 ring-2 transition has-[:focus-visible]:ring-brand-400',
+                    form.tipo === opt.value
+                      ? 'bg-brand-50 text-brand-600 ring-brand-400'
+                      : 'bg-cream text-ink/70 ring-transparent hover:ring-plum-200',
+                  ]"
+                >
+                  <input
+                    v-model="form.tipo"
+                    type="radio"
+                    name="tipo"
+                    :value="opt.value"
+                    class="sr-only"
+                  />
+                  <i :class="['mdi text-2xl', opt.icon]" />
+                  <span class="text-sm font-semibold">{{ opt.value }}</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div
+                v-for="field in fields"
+                :key="field.id"
+                :class="field.id === 'nombre' && 'sm:col-span-2'"
               >
-                <i :class="['mdi text-3xl mb-2', opt.icon, form.tipo === opt.value ? 'text-purple-600' : 'text-gray-500']" />
-                <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">{{ opt.label }}</span>
-              </button>
-            </div>
-          </div>
-
-          <form class="space-y-5" @submit.prevent="handleSubmit">
-            <div>
-              <label class="block text-sm font-bold text-purple-700 dark:text-purple-400 mb-2">Nombre <span class="text-red-500">*</span></label>
-              <input v-model="form.nombre" type="text" placeholder="Tu nombre completo" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-200 transition-all" />
-            </div>
-            <div>
-              <label class="block text-sm font-bold text-purple-700 dark:text-purple-400 mb-2">Email <span class="text-red-500">*</span></label>
-              <input v-model="form.email" type="email" placeholder="tu@email.com" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-200 transition-all" />
-            </div>
-            <div>
-              <label class="block text-sm font-bold text-purple-700 dark:text-purple-400 mb-2">Teléfono</label>
-              <input v-model="form.telefono" type="tel" placeholder="+57 3XX XXX XXXX" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-200 transition-all" />
+                <label :for="field.id" class="mb-2 block text-sm font-bold text-plum-700">
+                  {{ field.label }} <span v-if="field.required" class="text-brand-500">*</span>
+                </label>
+                <input
+                  :id="field.id"
+                  v-model="form[field.id]"
+                  :type="field.type"
+                  :placeholder="field.placeholder"
+                  :required="field.required"
+                  :autocomplete="field.id === 'nombre' ? 'name' : field.id"
+                  :class="inputClass"
+                />
+              </div>
             </div>
             <div>
-              <label class="block text-sm font-bold text-purple-700 dark:text-purple-400 mb-2">Mensaje <span class="text-red-500">*</span></label>
-              <textarea v-model="form.mensaje" placeholder="Cuéntanos con más detalle..." rows="5" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-200 transition-all resize-none" />
+              <label for="mensaje" class="mb-2 block text-sm font-bold text-plum-700">
+                Mensaje <span class="text-brand-500">*</span>
+              </label>
+              <textarea
+                id="mensaje"
+                v-model="form.mensaje"
+                placeholder="Cuéntanos con más detalle..."
+                rows="5"
+                required
+                :class="[inputClass, 'resize-none']"
+              />
             </div>
-            <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300">
-              Enviar por WhatsApp
+            <button type="submit" class="btn btn-whatsapp w-full py-4!">
+              <i class="mdi mdi-whatsapp text-xl" /> Enviar por WhatsApp
             </button>
           </form>
         </div>
 
-        <!-- Info -->
-        <div class="space-y-5">
-          <div class="bg-purple-50 dark:bg-gray-800 p-6 rounded-xl border border-purple-100 dark:border-gray-700">
-            <div class="flex items-start gap-4">
-              <i class="mdi mdi-phone text-4xl text-purple-600 dark:text-purple-400" />
-              <div>
-                <h3 class="font-bold text-purple-700 dark:text-purple-400 mb-2">Teléfono</h3>
-                <a href="tel:+573164284175" class="block text-gray-700 dark:text-gray-300 hover:text-purple-600 font-semibold transition-colors">+57 316 428 4175</a>
-                <a href="tel:+573228634379" class="block text-gray-700 dark:text-gray-300 hover:text-purple-600 font-semibold transition-colors">+57 322 863 4379</a>
-              </div>
-            </div>
+        <aside class="space-y-5">
+          <div v-reveal="100" class="card p-6">
+            <h3 class="mb-4 flex items-center gap-3 font-bold text-plum-800">
+              <i
+                class="mdi mdi-phone-outline grid size-11 place-items-center rounded-2xl bg-brand-50 text-2xl text-brand-500"
+              />
+              Teléfonos
+            </h3>
+            <a
+              v-for="p in contact.phones"
+              :key="p.href"
+              :href="p.href"
+              class="block py-1 font-semibold text-ink/80 transition hover:text-brand-600"
+            >
+              {{ p.label }}
+            </a>
           </div>
-          <div class="bg-purple-50 dark:bg-gray-800 p-6 rounded-xl border border-purple-100 dark:border-gray-700">
-            <div class="flex items-start gap-4">
-              <i class="mdi mdi-email text-4xl text-purple-600 dark:text-purple-400" />
-              <div>
-                <h3 class="font-bold text-purple-700 dark:text-purple-400 mb-2">Email</h3>
-                <a href="mailto:informacion@mariananovoa.org" class="text-gray-700 dark:text-gray-300 hover:text-purple-600 font-semibold transition-colors">informacion@mariananovoa.org</a>
-              </div>
-            </div>
+          <div v-reveal="200" class="card p-6">
+            <h3 class="mb-4 flex items-center gap-3 font-bold text-plum-800">
+              <i
+                class="mdi mdi-email-outline grid size-11 place-items-center rounded-2xl bg-brand-50 text-2xl text-brand-500"
+              />
+              Email
+            </h3>
+            <a
+              :href="`mailto:${contact.email}`"
+              class="font-semibold break-all text-ink/80 transition hover:text-brand-600"
+            >
+              {{ contact.email }}
+            </a>
           </div>
-          <div class="bg-purple-50 dark:bg-gray-800 p-6 rounded-xl border border-purple-100 dark:border-gray-700">
-            <div class="flex items-start gap-4">
-              <i class="mdi mdi-map-marker text-4xl text-purple-600 dark:text-purple-400" />
-              <div>
-                <h3 class="font-bold text-purple-700 dark:text-purple-400 mb-2">Ubicación</h3>
-                <a href="https://www.google.com/maps/search/Fundaci%C3%B3n+Mariana+Novoa" target="_blank" class="text-gray-700 dark:text-gray-300 hover:text-purple-600 font-semibold transition-colors">
-                  Km 5 vía antigua al Guavio<br />Altos de Serrezuela, Bogotá
-                </a>
-              </div>
-            </div>
+          <div v-reveal="300" class="card p-6">
+            <h3 class="mb-4 flex items-center gap-3 font-bold text-plum-800">
+              <i
+                class="mdi mdi-map-marker-outline grid size-11 place-items-center rounded-2xl bg-brand-50 text-2xl text-brand-500"
+              />
+              Ubicación
+            </h3>
+            <a
+              :href="contact.mapsUrl"
+              target="_blank"
+              rel="noopener"
+              class="font-semibold text-ink/80 transition hover:text-brand-600"
+            >
+              {{ contact.address }}
+            </a>
           </div>
-          <div class="bg-purple-50 dark:bg-gray-800 p-6 rounded-xl border border-purple-100 dark:border-gray-700">
-            <h3 class="font-bold text-purple-700 dark:text-purple-400 mb-4">Síguenos</h3>
-            <div class="flex gap-3">
-              <a v-for="(s, i) in [{ href: 'https://www.facebook.com/fundacionmariananovoa/', icon: 'mdi-facebook', bg: 'bg-blue-600 hover:bg-blue-700' }, { href: 'https://www.instagram.com/fundacionmariananovoa/', icon: 'mdi-instagram', bg: 'bg-pink-600 hover:bg-pink-700' }, { href: 'https://twitter.com/Fmariananovoa', icon: 'mdi-twitter', bg: 'bg-sky-500 hover:bg-sky-600' }, { href: 'https://www.youtube.com/channel/UCSnmLVrx0OchVn_7Cutkruw', icon: 'mdi-youtube', bg: 'bg-red-600 hover:bg-red-700' }]" :key="i" :href="s.href" target="_blank" :class="['flex items-center justify-center w-12 h-12 text-white rounded-full transition-colors', s.bg]">
-                <i :class="['mdi text-xl', s.icon]" />
+          <div
+            v-reveal="400"
+            class="card bg-gradient-to-br from-plum-700 to-brand-500 p-6 text-white"
+          >
+            <h3 class="mb-4 font-bold">Síguenos</h3>
+            <div class="flex flex-wrap gap-2">
+              <a
+                v-for="s in socials"
+                :key="s.label"
+                :href="s.href"
+                target="_blank"
+                rel="noopener"
+                :aria-label="s.label"
+                :class="[
+                  'grid size-11 place-items-center rounded-full bg-white/15 text-xl transition hover:-translate-y-1',
+                  s.hover,
+                ]"
+              >
+                <i :class="['mdi', s.icon]" />
               </a>
             </div>
           </div>
-        </div>
+        </aside>
       </div>
     </section>
   </div>

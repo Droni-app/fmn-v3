@@ -1,30 +1,79 @@
 <script setup lang="ts">
+import PageHero from '@/components/PageHero.vue'
 import { noticias } from '@/services/noticias'
+
+const [destacada, ...resto] = noticias
 </script>
 
 <template>
-  <section>
-    <header class="bg-rose-100 dark:bg-gray-800 py-16">
-      <h1 class="font-extrabold text-center text-5xl text-rose-500 dark:text-rose-400">Noticias</h1>
-    </header>
+  <div>
+    <PageHero
+      eyebrow="Lo que está pasando"
+      title="Noticias"
+      subtitle="Historias, visitas y logros de nuestra comunidad."
+    />
 
-    <div class="container mx-auto px-4 py-8">
-      <div v-for="noticia in noticias" :key="noticia.slug" class="grid grid-cols-1 lg:grid-cols-2 mb-12 rounded-xl shadow-lg overflow-hidden">
-        <div class="p-8 flex flex-col justify-center bg-white dark:bg-gray-900">
-          <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-3">{{ noticia.name }}</h2>
-          <p class="text-gray-600 dark:text-gray-400 text-lg mb-6">{{ noticia.description }}</p>
-          <a
-            :href="noticia.link"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 w-fit px-6 py-3 bg-rose-500 hover:bg-rose-600 text-white rounded-full shadow-lg transition-colors duration-300"
-          >
-            <i class="mdi mdi-open-in-new" />
-            Leer más
-          </a>
+    <section class="section-y container-page space-y-10">
+      <a
+        v-if="destacada"
+        v-reveal
+        :href="destacada.link"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="card card-hover group grid overflow-hidden lg:grid-cols-2"
+      >
+        <div class="overflow-hidden">
+          <img
+            :src="destacada.picture"
+            :alt="destacada.name"
+            class="aspect-video size-full object-cover transition duration-700 group-hover:scale-105 lg:aspect-auto"
+          />
         </div>
-        <img :src="noticia.picture" :alt="noticia.name" class="w-full h-72 lg:h-auto object-cover" />
+        <div class="flex flex-col justify-center p-8 lg:p-12">
+          <span class="chip w-fit bg-brand-50 text-brand-600">Destacada</span>
+          <h2 class="mt-4 text-2xl font-extrabold text-plum-800 md:text-3xl">
+            {{ destacada.name }}
+          </h2>
+          <p class="mt-4 leading-relaxed text-ink/70 md:text-lg">{{ destacada.description }}</p>
+          <span
+            class="mt-6 inline-flex items-center gap-2 font-display font-semibold text-brand-600"
+          >
+            Leer más
+            <i class="mdi mdi-arrow-right transition-transform group-hover:translate-x-1.5" />
+          </span>
+        </div>
+      </a>
+
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <a
+          v-for="(noticia, i) in resto"
+          :key="noticia.slug"
+          v-reveal="(i % 3) * 100"
+          :href="noticia.link"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="card card-hover group flex flex-col overflow-hidden"
+        >
+          <div class="overflow-hidden">
+            <img
+              :src="noticia.picture"
+              :alt="noticia.name"
+              loading="lazy"
+              class="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-105"
+            />
+          </div>
+          <div class="flex flex-1 flex-col p-6">
+            <h2 class="text-lg leading-snug font-bold text-plum-800">{{ noticia.name }}</h2>
+            <p class="mt-3 line-clamp-3 text-ink/70">{{ noticia.description }}</p>
+            <span
+              class="mt-auto inline-flex items-center gap-2 pt-5 font-display font-semibold text-brand-600"
+            >
+              Leer más
+              <i class="mdi mdi-arrow-right transition-transform group-hover:translate-x-1.5" />
+            </span>
+          </div>
+        </a>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>

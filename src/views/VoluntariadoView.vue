@@ -1,5 +1,27 @@
 <script setup lang="ts">
+import MediaSplit from '@/components/MediaSplit.vue'
+import PageHero from '@/components/PageHero.vue'
+import SectionHeading from '@/components/SectionHeading.vue'
+import YoutubeLite from '@/components/YoutubeLite.vue'
+import { pub, whatsappMessage } from '@/services/site'
 import imgPresencial from '@/assets/voluntariado/vpresencial.webp'
+
+const modalidades = [
+  {
+    eyebrow: 'Para personas',
+    title: 'Voluntariado presencial',
+    text: '¿Te gusta regalar sonrisas y momentos únicos? ¡Sube con nosotros, sé voluntario en la Fundación Mariana Novoa y comparte con nuestros 110 niños en Altos de Serrezuela!',
+    image: imgPresencial,
+    message: 'Hola, quiero ser voluntario/a presencial',
+  },
+  {
+    eyebrow: 'Para empresas',
+    title: 'Voluntariado corporativo',
+    text: '¿Quieres apoyar una gran causa que contribuye a una transformación en la sociedad? ¡La responsabilidad social de tu empresa y la Fundación Mariana Novoa pueden trabajar de la mano!',
+    image: pub('/img/voluntariado/VOLUNTARIADO-CORP.webp'),
+    message: 'Hola, quiero información sobre voluntariado corporativo',
+  },
+]
 
 const videos = [
   'lhxEtdr_2Ko',
@@ -15,68 +37,63 @@ const videos = [
 
 <template>
   <div>
-    <section class="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-16 px-4">
-      <div class="container mx-auto max-w-6xl">
-        <h1 class="text-4xl md:text-5xl font-bold text-center mb-8">Invitación al Voluntariado</h1>
-        <iframe
-          class="w-full aspect-video rounded-lg shadow-xl mx-auto max-w-4xl"
-          src="https://www.youtube.com/embed/M6ibmG5Glog"
-          title="Invitación al Voluntariado"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        />
-      </div>
-    </section>
+    <PageHero
+      eyebrow="Súmate"
+      title="Invitación al voluntariado"
+      subtitle="Regala tu tiempo y tu talento a los niños, niñas y adultos mayores de Altos de Serrezuela."
+      tone="plum"
+    />
 
-    <section class="py-16 px-4 bg-white dark:bg-gray-900">
-      <div class="container mx-auto max-w-6xl grid md:grid-cols-2 gap-12 items-center">
-        <div>
-          <h2 class="text-3xl md:text-4xl font-bold text-purple-700 dark:text-purple-400 mb-6">Voluntariado Presencial</h2>
-          <p class="text-lg text-gray-700 dark:text-gray-300 mb-8">
-            ¿Te gusta regalar sonrisas y momentos únicos? ¡Sube con nosotros, sé voluntario en la Fundación Mariana Novoa y comparte con nuestros 110 niños en Altos de Serrezuela!
-          </p>
-          <RouterLink to="/contacto" class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300">
-            Llenar Formulario
-          </RouterLink>
-        </div>
-        <img :src="imgPresencial" alt="Voluntariado Presencial" class="rounded-lg shadow-xl w-full" />
-      </div>
-    </section>
+    <div class="container-page -mt-16 md:-mt-24">
+      <YoutubeLite
+        v-reveal:zoom
+        id="M6ibmG5Glog"
+        title="Invitación al voluntariado"
+        class="mx-auto max-w-4xl shadow-2xl"
+      />
+    </div>
 
-    <section class="py-16 px-4 bg-gray-50 dark:bg-gray-800">
-      <div class="container mx-auto max-w-6xl grid md:grid-cols-2 gap-12 items-center">
-        <div class="order-2 md:order-1">
-          <h2 class="text-3xl md:text-4xl font-bold text-purple-700 dark:text-purple-400 mb-6">Voluntariado Corporativo</h2>
-          <p class="text-lg text-gray-700 dark:text-gray-300 mb-8">
-            ¿Quieres apoyar una gran causa que contribuye a una transformación en la sociedad? ¡La responsabilidad social de tu empresa y la Fundación Mariana Novoa pueden trabajar de la mano!
-          </p>
-          <RouterLink to="/contacto" class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300">
-            Llenar Formulario
-          </RouterLink>
-        </div>
-        <div class="order-1 md:order-2">
-          <img src="/img/voluntariado/VOLUNTARIADO-CORP.jpg" alt="Voluntariado Corporativo" class="rounded-lg shadow-xl w-full" />
-        </div>
-      </div>
-    </section>
-
-    <!-- Galería de videos -->
-    <section class="bg-gray-900 py-16 px-4">
-      <div class="container mx-auto max-w-6xl">
-        <h2 class="text-center text-3xl md:text-4xl font-extrabold text-white mb-2">Galería de Videos</h2>
-        <p class="text-center text-purple-400 font-semibold mb-10 tracking-wide uppercase text-sm">Voluntariado</p>
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          <div v-for="video in videos" :key="video">
-            <iframe
-              :src="`https://www.youtube.com/embed/${video}`"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              class="w-full rounded-xl shadow-lg"
-              style="aspect-ratio: 9/16"
-            />
+    <section
+      v-for="(m, i) in modalidades"
+      :key="m.title"
+      :class="['section-y', i % 2 === 1 && 'bg-white']"
+    >
+      <div class="container-page">
+        <MediaSplit
+          :image="m.image"
+          :alt="m.title"
+          :eyebrow="m.eyebrow"
+          :title="m.title"
+          :reverse="i % 2 === 1"
+        >
+          <p class="prose-body">{{ m.text }}</p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a
+              :href="whatsappMessage(m.message)"
+              target="_blank"
+              rel="noopener"
+              class="btn btn-whatsapp"
+            >
+              <i class="mdi mdi-whatsapp text-xl" /> Quiero participar
+            </a>
+            <RouterLink to="/contacto" class="btn btn-outline">Llenar formulario</RouterLink>
           </div>
+        </MediaSplit>
+      </div>
+    </section>
+
+    <section class="section-y bg-plum-900">
+      <div class="container-page">
+        <SectionHeading light eyebrow="Voluntariado" title="Galería de videos" />
+        <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          <YoutubeLite
+            v-for="(video, i) in videos"
+            :key="video"
+            v-reveal="(i % 4) * 80"
+            :id="video"
+            :title="`Voluntariado – video ${i + 1}`"
+            vertical
+          />
         </div>
       </div>
     </section>

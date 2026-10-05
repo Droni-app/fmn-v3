@@ -1,225 +1,223 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import imgCada48h from '@/assets/asalvo/cada-48h.jpg'
+import MediaSplit from '@/components/MediaSplit.vue'
+import SectionHeading from '@/components/SectionHeading.vue'
+import StatCounter from '@/components/StatCounter.vue'
+import { pub, whatsappMessage } from '@/services/site'
+import imgCada48h from '@/assets/asalvo/cada-48h.webp'
+import imgOpes from '@/assets/asalvo/opes.webp'
+import imgDesahogate from '@/assets/asalvo/desahogate.webp'
 
-onMounted(() => {
-  const script = document.createElement('script')
-  script.src = 'https://public.flourish.studio/resources/embed.js'
-  document.body.appendChild(script)
-})
-import imgOpes from '@/assets/asalvo/opes.jpg'
-import imgDesahogate from '@/assets/asalvo/desahogate.png'
+const valores = [
+  { label: 'Concientizar', icon: 'mdi-bullhorn-outline', color: 'from-ocean-500 to-ocean-700' },
+  { label: 'Prevenir', icon: 'mdi-shield-check-outline', color: 'from-cyan-400 to-ocean-500' },
+  { label: 'Rescatar', icon: 'mdi-lifebuoy', color: 'from-teal-400 to-cyan-600' },
+]
+
+const cursos = [
+  {
+    title: 'Curso de operación de piscinas y estructuras similares',
+    text: 'Programa de capacitación enfocado en la Ley 1209 de 2008, que tiene como objetivo ayudar a administradores y trabajadores del sector acuático a garantizar condiciones óptimas para el buen funcionamiento de estos espacios, velando por la prevención de accidentes y la salud de los usuarios.',
+    image: imgOpes,
+  },
+  {
+    title: 'Taller de salvamento acuático – Actualización',
+    text: 'Capacitación de actualización para salvavidas, socorristas y personal de seguridad acuática. Refuerza técnicas de rescate, primeros auxilios acuáticos y uso de equipos especializados.',
+    image: pub('/img/talleres/v2/CAP08.webp'),
+  },
+]
 </script>
 
 <template>
   <div>
     <!-- Hero -->
-    <section class="relative h-[500px] md:h-[600px] overflow-hidden">
+    <header class="relative isolate flex min-h-[70vh] items-end overflow-hidden md:min-h-[80vh]">
       <img
-        src="/img/banners/BANNER-AHOGAMIENTO.jpg"
-        alt="Banner Ahogamiento"
-        class="w-full h-full object-cover"
+        :src="pub('/img/banners/BANNER-AHOGAMIENTO.webp')"
+        alt=""
+        fetchpriority="high"
+        class="absolute inset-0 -z-10 size-full object-cover"
       />
-      <div class="absolute inset-0 bg-black/40 flex items-end pb-8 justify-center">
-        <h1 class="text-3xl md:text-5xl font-bold text-white text-center px-4">
-          EL AHOGAMIENTO ES UN EVENTO RÁPIDO Y SILENCIOSO
+      <div
+        class="absolute inset-0 -z-10 bg-gradient-to-t from-ocean-900 via-ocean-900/40 to-transparent"
+      />
+      <div class="container-page pb-16 text-center text-white md:pb-24">
+        <p class="eyebrow mb-4 animate-fade-up justify-center text-ocean-400!">ASALVO</p>
+        <h1
+          class="mx-auto max-w-4xl animate-fade-up font-display text-3xl font-extrabold [animation-delay:100ms] sm:text-5xl lg:text-6xl"
+        >
+          El ahogamiento es un evento rápido y silencioso
         </h1>
       </div>
-    </section>
+    </header>
 
-    <!-- Cifras de ahogamiento -->
-    <section class="bg-blue-700 dark:bg-blue-900 py-16 px-4 text-white text-center">
-      <div class="container mx-auto max-w-4xl flex flex-col gap-6">
-        <p class="text-xs font-bold tracking-widest uppercase text-blue-200">
+    <!-- Cifra -->
+    <section class="bg-ocean-900 py-16 text-center text-white md:py-24">
+      <div class="container-page">
+        <p
+          class="font-display text-xs font-bold tracking-[0.2em] text-ocean-400 uppercase sm:text-sm"
+        >
           Cifras de ahogamiento Colombia · Enero – Julio 2025
         </p>
-        <p class="text-6xl md:text-8xl font-extrabold leading-none">406</p>
-        <p class="text-xl md:text-2xl font-semibold text-blue-100 max-w-2xl mx-auto leading-snug">
+        <StatCounter
+          :value="406"
+          class="mt-4 block font-display text-7xl leading-none font-black text-white md:text-9xl"
+        />
+        <p class="mx-auto mt-4 max-w-2xl text-xl font-semibold text-white/80 md:text-2xl">
           personas han perdido la vida por ahogamiento en el territorio nacional
         </p>
       </div>
     </section>
     <img
-      src="/img/ahogamientoAsalvo/CIFRAS-Y-CONTEXTO.jpg"
-      alt="Cifras y contexto"
-      class="w-full h-auto"
+      :src="pub('/img/ahogamientoAsalvo/CIFRAS-Y-CONTEXTO.webp')"
+      alt="Cifras y contexto del ahogamiento en Colombia"
+      loading="lazy"
+      class="w-full"
     />
 
-    <!-- Impacto sociodemográfico -->
-    <section class="py-16 px-4 bg-white dark:bg-gray-900">
-      <div class="container mx-auto max-w-5xl flex flex-col gap-8">
-        <h2
-          class="text-2xl md:text-3xl font-bold text-blue-700 dark:text-blue-400 text-center leading-snug"
-        >
-          Impacto Sociodemográfico – Muertes por Ahogamiento en Colombia.<br />Enero – Junio 2025
-        </h2>
-        <div class="flourish-embed flourish-map" data-src="visualisation/24511098" />
+    <!-- Mapa Flourish -->
+    <section class="section-y container-page">
+      <SectionHeading
+        eyebrow="Enero – Junio 2025"
+        title="Impacto sociodemográfico – Muertes por ahogamiento en Colombia"
+      />
+      <div class="card overflow-hidden p-2">
+        <iframe
+          src="https://flo.uri.sh/visualisation/24511098/embed"
+          title="Mapa de muertes por ahogamiento en Colombia"
+          loading="lazy"
+          class="h-[520px] w-full rounded-[1.25rem] md:h-[680px]"
+        />
       </div>
     </section>
 
     <!-- Cita -->
-    <section class="py-16 px-4 bg-white dark:bg-gray-900">
-      <div class="container mx-auto max-w-6xl grid md:grid-cols-2 gap-12 items-center">
-        <div>
-          <blockquote
-            class="text-xl md:text-2xl text-gray-700 dark:text-gray-300 italic mb-6 leading-relaxed border-l-4 border-blue-500 pl-6"
-          >
-            "Mi Mariana se fue al cielo antes de tiempo. Con la fuerza de mi corazón, transformó mi
-            dolor en esperanza de vida para que los niños que viven en la tierra no cierren sus ojos
-            dentro del agua. Es mi misión, es su legado, es el regalo que mi hija me dejó."
-          </blockquote>
-          <p class="text-lg font-semibold text-purple-700 dark:text-purple-400">
-            Hortensia Espitaleta – Directora de la Fundación Mariana Novoa
-          </p>
-        </div>
-      </div>
+    <section class="bg-white py-16 md:py-24">
+      <figure v-reveal class="container-page max-w-4xl text-center">
+        <i class="mdi mdi-format-quote-open text-6xl text-ocean-400" />
+        <blockquote
+          class="font-display text-xl leading-relaxed font-medium text-plum-800 italic md:text-3xl"
+        >
+          Mi Mariana se fue al cielo antes de tiempo. Con la fuerza de mi corazón, transformó mi
+          dolor en esperanza de vida para que los niños que viven en la tierra no cierren sus ojos
+          dentro del agua. Es mi misión, es su legado, es el regalo que mi hija me dejó.
+        </blockquote>
+        <figcaption class="mt-6 font-semibold text-brand-600">
+          Hortensia Espitaleta · Directora de la Fundación Mariana Novoa
+        </figcaption>
+      </figure>
     </section>
 
-    <!-- Descripción -->
-    <section class="py-16 px-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white">
-      <div class="container mx-auto max-w-4xl text-center">
-        <p class="text-xl md:text-2xl leading-relaxed">
+    <!-- Qué es ASALVO + valores -->
+    <section
+      class="relative isolate overflow-hidden bg-gradient-to-br from-ocean-700 to-ocean-500 py-16 text-white md:py-24"
+    >
+      <div
+        class="absolute -top-20 -right-20 -z-10 size-96 animate-float rounded-full bg-white/10 blur-3xl"
+      />
+      <div class="container-page">
+        <p v-reveal class="mx-auto max-w-4xl text-center text-xl leading-relaxed md:text-2xl">
           <strong>ASALVO</strong> es una marca conjunta de la Fundación Mariana Novoa que tiene como
           propósito disminuir las cifras de personas ahogadas en el país, generando conciencia a
           través de los diferentes métodos de prevención, la importancia de la supervisión visual
           permanente y el conocimiento e implementación de medidas de seguridad en piscinas bajo la
           normatividad de la Ley 1209 de 2008.
         </p>
-      </div>
-    </section>
-
-    <!-- Valores -->
-    <section class="py-16 px-4 bg-gray-50 dark:bg-gray-800">
-      <div class="container mx-auto max-w-6xl">
-        <h2
-          class="text-4xl md:text-5xl font-bold text-center text-blue-700 dark:text-blue-400 mb-12"
-        >
-          Valores
-        </h2>
-        <div class="grid md:grid-cols-3 gap-8 mb-12">
+        <div class="mt-14 grid gap-6 sm:grid-cols-3">
           <div
-            v-for="item in [
-              {
-                color: 'bg-blue-500',
-                label: 'Concientizar',
-                textColor: 'text-blue-700 dark:text-blue-300',
-              },
-              {
-                color: 'bg-cyan-500',
-                label: 'Prevenir',
-                textColor: 'text-cyan-700 dark:text-cyan-300',
-              },
-              {
-                color: 'bg-teal-500',
-                label: 'Rescatar',
-                textColor: 'text-teal-700 dark:text-teal-300',
-              },
-            ]"
-            :key="item.label"
-            class="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-8 text-center hover:scale-105 transition-transform duration-300"
+            v-for="(v, i) in valores"
+            :key="v.label"
+            v-reveal="i * 120"
+            class="rounded-3xl bg-white/10 p-8 text-center ring-1 ring-white/20 backdrop-blur transition hover:-translate-y-1 hover:bg-white/15"
           >
-            <div
+            <span
               :class="[
-                'w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4',
-                item.color,
+                'mx-auto mb-4 grid size-20 place-items-center rounded-full bg-gradient-to-br text-4xl shadow-lg',
+                v.color,
               ]"
             >
-              <i class="mdi mdi-shield-check text-white text-4xl" />
-            </div>
-            <h3 :class="['text-2xl font-bold', item.textColor]">{{ item.label }}</h3>
+              <i :class="['mdi', v.icon]" />
+            </span>
+            <h3 class="text-2xl font-bold">{{ v.label }}</h3>
           </div>
         </div>
-        <img :src="imgCada48h" alt="Cada 48 horas" class="rounded-lg shadow-xl mx-auto" />
       </div>
     </section>
 
-    <!-- 5 Tips -->
-    <section class="py-16 px-4 bg-white dark:bg-gray-900">
-      <div class="container mx-auto max-w-4xl">
-        <img
-          src="/img/ahogamientoAsalvo/5-TIPS.jpg"
-          alt="5 Tips responsables"
-          class="w-full h-auto rounded-2xl shadow-md"
-        />
-      </div>
+    <section class="section-y container-page grid gap-10">
+      <img
+        v-reveal
+        :src="imgCada48h"
+        alt="Cada 48 horas"
+        loading="lazy"
+        class="w-full rounded-[2rem] shadow-xl"
+      />
+      <img
+        v-reveal
+        :src="pub('/img/ahogamientoAsalvo/5-TIPS.webp')"
+        alt="5 tips responsables para prevenir el ahogamiento"
+        loading="lazy"
+        class="mx-auto w-full max-w-4xl rounded-[2rem] shadow-xl"
+      />
     </section>
 
-    <!-- OPES -->
-    <section class="py-16 px-4 bg-gray-50 dark:bg-gray-800">
-      <div class="container mx-auto max-w-6xl grid md:grid-cols-2 gap-12 items-center">
-        <div>
-          <h2 class="text-3xl md:text-4xl font-bold text-blue-700 dark:text-blue-400 mb-6">
-            CURSO DE OPERACIONES DE PISCINAS Y ESTRUCTURAS SIMILARES
-          </h2>
-          <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
-            Programa de capacitación enfocado en la Ley 1209 de 2008, que tiene como objetivo ayudar
-            a administradores y trabajadores del sector acuático a garantizar condiciones óptimas
-            para el buen funcionamiento de estos espacios, velando por la prevención de accidentes y
-            la salud de los usuarios.
-          </p>
-          <RouterLink
-            to="/contacto"
-            class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300"
+    <!-- Cursos -->
+    <section
+      v-for="(c, i) in cursos"
+      :key="c.title"
+      :class="['section-y', i % 2 === 0 && 'bg-white']"
+    >
+      <div class="container-page">
+        <MediaSplit
+          :image="c.image"
+          :alt="c.title"
+          :title="c.title"
+          eyebrow="Capacítate"
+          :reverse="i % 2 === 1"
+        >
+          <p class="prose-body">{{ c.text }}</p>
+          <a
+            :href="whatsappMessage(`Hola, quiero inscribirme en: ${c.title}`)"
+            target="_blank"
+            rel="noopener"
+            class="btn mt-8 bg-ocean-600 text-white shadow-lg shadow-ocean-600/30 hover:bg-ocean-700"
           >
-            ¡Inscríbete!
-          </RouterLink>
-        </div>
-        <img :src="imgOpes" alt="Curso OPES" class="rounded-lg shadow-xl w-full" />
-      </div>
-    </section>
-
-    <!-- Salvamento Acuático -->
-    <section class="py-16 px-4 bg-white dark:bg-gray-900">
-      <div class="container mx-auto max-w-6xl grid md:grid-cols-2 gap-12 items-center">
-        <img
-          src="/img/talleres/v2/CAP08.png"
-          alt="Taller de Salvamento Acuático"
-          class="rounded-lg shadow-xl w-full"
-        />
-        <div>
-          <h2 class="text-3xl md:text-4xl font-bold text-blue-700 dark:text-blue-400 mb-6">
-            Taller de Salvamento Acuático – Actualización
-          </h2>
-          <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
-            Capacitación de actualización para salvavidas, socorristas y personal de seguridad
-            acuática. Refuerza técnicas de rescate, primeros auxilios acuáticos y uso de equipos
-            especializados.
-          </p>
-          <RouterLink
-            to="/contacto"
-            class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300"
-          >
-            ¡Inscríbete!
-          </RouterLink>
-        </div>
+            ¡Inscríbete! <i class="mdi mdi-arrow-right" />
+          </a>
+        </MediaSplit>
       </div>
     </section>
 
     <!-- Podcast -->
-    <section class="py-16 px-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white">
-      <div class="container mx-auto max-w-6xl grid md:grid-cols-2 gap-12 items-center">
-        <div class="order-2 md:order-1">
-          <iframe
-            class="w-full aspect-video"
-            src="https://widget.spreaker.com/player?show_id=4069766&theme=dark&playlist=show&playlist-continuous=true"
-            title="Desahógate"
-            frameborder="0"
-          />
-        </div>
-        <div class="order-1 md:order-2 text-center md:text-left">
+    <section class="container-page pb-16 md:pb-24">
+      <div
+        v-reveal:zoom
+        class="grid items-center gap-10 overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-plum-700 to-brand-500 p-6 text-white shadow-2xl sm:p-10 md:grid-cols-2 lg:p-14"
+      >
+        <div class="text-center md:text-left">
           <img
             :src="imgDesahogate"
-            alt="Desahógate Podcast"
-            class="rounded-lg shadow-xl w-full mb-6"
+            alt="Desahógate"
+            loading="lazy"
+            class="mx-auto mb-6 w-64 md:mx-0"
           />
-          <h2 class="text-4xl font-bold mb-4">El Podcast que salvará tu vida</h2>
+          <h2 class="font-display text-3xl font-extrabold md:text-4xl">
+            El podcast que salvará tu vida
+          </h2>
           <a
             href="https://www.asalvo.org/"
             target="_blank"
-            class="inline-block bg-white text-purple-600 hover:bg-gray-100 font-bold py-3 px-8 rounded-lg transition-colors duration-300"
-            >Desahógate</a
+            rel="noopener"
+            class="btn btn-light mt-8"
           >
+            <i class="mdi mdi-podcast" /> Escuchar Desahógate
+          </a>
         </div>
+        <iframe
+          class="aspect-video w-full rounded-2xl"
+          src="https://widget.spreaker.com/player?show_id=4069766&theme=dark&playlist=show&playlist-continuous=true"
+          title="Desahógate – Podcast"
+          loading="lazy"
+        />
       </div>
     </section>
   </div>

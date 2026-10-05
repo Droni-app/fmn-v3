@@ -1,57 +1,79 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
-import bannerLanzamientov2 from '@/assets/congreso/2026/banner-lanzamientov2.webp'
+import { onMounted, ref } from 'vue'
+import bannerCongreso from '@/assets/congreso/2026/banner-lanzamientov2.webp'
+import { links, pub } from '@/services/site'
 
 interface Slide {
   image: string
   link: string
-  title?: string
+  alt: string
 }
 
 const slides: Slide[] = [
-  { image: bannerLanzamientov2, link: '/congreso' },
-  { image: '/img/slides/02.webp', link: 'https://checkout.wompi.co/l/VPOS_2DN3Dr' },
-  { image: '/img/slides/03.png', link: '/' },
+  {
+    image: bannerCongreso,
+    link: '/congreso',
+    alt: 'IV Congreso Internacional para la prevención de los ahogamientos, 24 al 26 de agosto de 2026',
+  },
+  {
+    image: pub('/img/slides/02.webp'),
+    link: links.donate,
+    alt: 'Seguridad, bienestar y mejores oportunidades para la población infantil. Donar',
+  },
+  {
+    image: pub('/img/slides/03.webp'),
+    link: '/talleres',
+    alt: 'Talleres y cursos en Primeros Auxilios y RCP. Quiero inscribirme',
+  },
 ]
+
+const INTERVAL = 7000
+const current = ref(0)
+const paused = ref(false)
+const autoplay = ref(true)
+let touchX = 0
 
 const isExternal = (url: string) => url.startsWith('http')
 
-const currentSlide = ref(0)
-const progress = ref(0)
-let autoplayTimer: ReturnType<typeof setInterval> | null = null
-let progressTimer: ReturnType<typeof setInterval> | null = null
+const goTo = (i: number) => (current.value = (i + slides.length) % slides.length)
+const next = () => goTo(current.value + 1)
+const prev = () => goTo(current.value - 1)
 
-const goTo = (index: number) => {
-  currentSlide.value = index
-  progress.value = 0
-}
-const next = () => goTo((currentSlide.value + 1) % slides.length)
-const prev = () => goTo((currentSlide.value - 1 + slides.length) % slides.length)
-
-const startAutoplay = () => {
-  autoplayTimer = setInterval(next, 15000)
-  progressTimer = setInterval(() => {
-    progress.value = Math.min(progress.value + 0.2, 100)
-    if (progress.value >= 100) progress.value = 0
-  }, 30)
+const onTouchStart = (e: TouchEvent) => (touchX = e.touches[0]?.clientX ?? 0)
+const onTouchEnd = (e: TouchEvent) => {
+  const dx = (e.changedTouches[0]?.clientX ?? 0) - touchX
+  if (Math.abs(dx) > 40) (dx < 0 ? next : prev)()
 }
 
-onMounted(startAutoplay)
-onUnmounted(() => {
-  if (autoplayTimer) clearInterval(autoplayTimer)
-  if (progressTimer) clearInterval(progressTimer)
-})
+// El avance automático lo dispara el final de la barra de progreso (CSS), así pausar es trivial.
+onMounted(() => (autoplay.value = !matchMedia('(prefers-reduced-motion: reduce)').matches))
 </script>
 
 <template>
-  <section class="relative w-full overflow-hidden bg-gray-900">
-    <!-- Slides -->
-    <div class="relative w-full" style="padding-bottom: 43.75%">
+  <section
+    class="group/slider relative overflow-hidden rounded-[2rem] bg-plum-900 shadow-2xl shadow-plum-900/20"
+    aria-roledescription="carrusel"
+    aria-label="Campañas destacadas"
+    @mouseenter="paused = true"
+    @mouseleave="paused = false"
+    @focusin="paused = true"
+    @focusout="paused = false"
+    @touchstart.passive="onTouchStart"
+    @touchend="onTouchEnd"
+    @keydown.left="prev"
+    @keydown.right="next"
+  >
+    <div class="relative aspect-[2/1]">
       <div
         v-for="(slide, i) in slides"
-        :key="i"
-        class="absolute inset-0 transition-opacity duration-700 ease-in-out"
-        :class="i === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'"
+        :key="slide.image"
+        :class="[
+          'absolute inset-0 transition-all duration-700 ease-out',
+          i === current
+            ? 'z-10 scale-100 opacity-100'
+            : 'pointer-events-none z-0 scale-105 opacity-0',
+        ]"
+        :aria-hidden="i !== current"
       >
         <component
           :is="isExternal(slide.link) ? 'a' : 'RouterLink'"
@@ -60,61 +82,76 @@ onUnmounted(() => {
               ? { href: slide.link, target: '_blank', rel: 'noopener noreferrer' }
               : { to: slide.link }
           "
-          class="block w-full h-full group"
+          :tabindex="i === current ? 0 : -1"
+          class="block size-full"
         >
+          <!-- Fondo difuminado para que el banner nunca se recorte -->
           <img
             :src="slide.image"
-            :alt="slide.title ?? 'Slide'"
-            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            alt=""
+            class="absolute inset-0 size-full scale-110 object-cover opacity-60 blur-2xl"
           />
-          <div
-            v-if="slide.title"
-            class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end"
-          >
-            <div class="container mx-auto px-6 pb-10">
-              <h2 class="text-3xl md:text-5xl font-bold text-white">{{ slide.title }}</h2>
-            </div>
-          </div>
+          <img
+            :src="slide.image"
+            :alt="slide.alt"
+            :loading="i === 0 ? 'eager' : 'lazy'"
+            :fetchpriority="i === 0 ? 'high' : 'auto'"
+            class="relative size-full object-contain"
+          />
         </component>
       </div>
     </div>
 
-    <!-- Arrows -->
     <button
-      aria-label="Anterior"
-      class="absolute left-3 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-3 bg-white/80 hover:bg-white rounded-full shadow-lg transition-all hover:scale-110 focus:outline-none"
-      @click="prev"
+      v-for="dir in ['prev', 'next'] as const"
+      :key="dir"
+      type="button"
+      :aria-label="dir === 'prev' ? 'Anterior' : 'Siguiente'"
+      :class="[
+        'absolute top-1/2 z-20 hidden size-12 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-2xl text-plum-800 opacity-0 shadow-lg transition group-hover/slider:opacity-100 hover:scale-110 hover:bg-white focus-visible:opacity-100 sm:grid',
+        dir === 'prev' ? 'left-4' : 'right-4',
+      ]"
+      @click="dir === 'prev' ? prev() : next()"
     >
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-      </svg>
-    </button>
-    <button
-      aria-label="Siguiente"
-      class="absolute right-3 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-3 bg-white/80 hover:bg-white rounded-full shadow-lg transition-all hover:scale-110 focus:outline-none"
-      @click="next"
-    >
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-      </svg>
+      <i :class="['mdi', dir === 'prev' ? 'mdi-chevron-left' : 'mdi-chevron-right']" />
     </button>
 
-    <!-- Indicators -->
-    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+    <div class="absolute bottom-3 left-1/2 z-20 flex -translate-x-1/2 gap-2 sm:bottom-5">
       <button
-        v-for="(_, i) in slides"
-        :key="i"
-        :aria-label="`Ir al slide ${i + 1}`"
-        class="h-1.5 rounded-full transition-all duration-300"
-        :class="i === currentSlide ? 'w-10 bg-white' : 'w-6 bg-white/50 hover:bg-white/75'"
+        v-for="(slide, i) in slides"
+        :key="slide.image"
+        type="button"
+        :aria-label="`Ir a la diapositiva ${i + 1}`"
+        :aria-current="i === current"
+        class="relative h-1.5 overflow-hidden rounded-full bg-white/40 transition-all duration-300"
+        :class="i === current ? 'w-12' : 'w-5 hover:bg-white/70'"
         @click="goTo(i)"
-      />
+      >
+        <span
+          v-if="i === current && autoplay"
+          :key="`p-${current}`"
+          class="progress absolute inset-0 origin-left bg-white"
+          :style="{
+            animationDuration: `${INTERVAL}ms`,
+            animationPlayState: paused ? 'paused' : 'running',
+          }"
+          @animationend="next"
+        />
+      </button>
     </div>
-
-    <!-- Progress bar -->
-    <div
-      class="absolute bottom-0 left-0 h-1 bg-rose-500 z-20 transition-all duration-100 ease-linear"
-      :style="{ width: `${progress}%` }"
-    />
   </section>
 </template>
+
+<style scoped>
+.progress {
+  animation: progress linear forwards;
+}
+@keyframes progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+</style>

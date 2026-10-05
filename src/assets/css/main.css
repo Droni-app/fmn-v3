@@ -1,19 +1,212 @@
-@import "tailwindcss";
-@custom-variant dark (&:where(.dark, .dark *));
+@import 'tailwindcss';
 
-.poppins {
-  font-family: "Poppins", sans-serif;
+/* ───────────── Design tokens ───────────── */
+@theme {
+  --font-sans: 'Nunito', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+
+  /* Rosa de la fundación */
+  --color-brand-50: #fff1f3;
+  --color-brand-100: #ffe0e6;
+  --color-brand-200: #ffc6d1;
+  --color-brand-300: #ff9cb0;
+  --color-brand-400: #ff6c86;
+  --color-brand-500: #f9405f;
+  --color-brand-600: #e51f47;
+  --color-brand-700: #c1143a;
+
+  /* Morado institucional */
+  --color-plum-50: #f5f3ff;
+  --color-plum-100: #ece8fb;
+  --color-plum-200: #d9d1f7;
+  --color-plum-300: #b8a8ef;
+  --color-plum-400: #8f78e0;
+  --color-plum-500: #6c52c9;
+  --color-plum-600: #5b45a8;
+  --color-plum-700: #4a3790;
+  --color-plum-800: #362868;
+  --color-plum-900: #241a47;
+
+  /* Acento cálido */
+  --color-sun-200: #fde9a6;
+  --color-sun-300: #fcd96b;
+  --color-sun-400: #f8c537;
+
+  /* Agua (ASALVO / congreso) */
+  --color-ocean-400: #38bdf8;
+  --color-ocean-500: #0ea5e9;
+  --color-ocean-600: #0369a1;
+  --color-ocean-700: #0b3d91;
+  --color-ocean-900: #0b1f5c;
+
+  --color-ink: #1f1a33;
+  --color-cream: #fffaf7;
+
+  --animate-float: float 8s ease-in-out infinite;
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-fade-up: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(20px, -24px) scale(1.06);
+    }
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
 }
 
-/* Previene franjas blancas fuera del wrapper de Vue */
-html,
-body {
-  background-color: white;
+/* ───────────── Base ───────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    background: var(--color-cream);
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-cream font-sans text-ink antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-balance;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-500;
+  }
+  ::selection {
+    @apply bg-brand-200 text-ink;
+  }
+  html.no-scroll {
+    overflow: hidden;
+  }
 }
 
-.dark html,
-.dark body,
-html.dark,
-html.dark body {
-  background-color: #111827; /* gray-900 */
+/* ───────────── Layout & tipografía ───────────── */
+@utility container-page {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+@utility section-y {
+  @apply py-16 md:py-24;
+}
+@utility eyebrow {
+  @apply inline-flex items-center gap-2 font-display text-xs font-bold tracking-[0.2em] text-brand-600 uppercase sm:text-sm;
+}
+@utility heading {
+  @apply font-display text-3xl leading-tight font-extrabold tracking-tight text-plum-800 sm:text-4xl lg:text-5xl;
+}
+@utility lead {
+  @apply text-lg leading-relaxed text-ink/70 md:text-xl;
+}
+@utility prose-body {
+  @apply space-y-4 text-lg leading-relaxed text-ink/75;
+}
+@utility text-gradient {
+  @apply bg-gradient-to-r from-brand-500 via-brand-400 to-plum-500 bg-clip-text text-transparent;
+}
+
+/* ───────────── Componentes ───────────── */
+@utility card {
+  @apply rounded-3xl bg-white shadow-[0_10px_40px_-15px_rgb(54_40_104/0.25)] ring-1 ring-plum-900/5;
+}
+@utility card-hover {
+  @apply transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_25px_50px_-20px_rgb(54_40_104/0.35)];
+}
+
+@utility btn {
+  @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full px-6 py-3 font-display text-sm font-semibold whitespace-nowrap transition duration-300 select-none hover:-translate-y-0.5 active:translate-y-0 sm:text-base;
+}
+@utility btn-primary {
+  @apply bg-brand-500 text-white shadow-lg shadow-brand-500/30 hover:bg-brand-600 hover:shadow-xl hover:shadow-brand-500/40;
+}
+@utility btn-plum {
+  @apply bg-plum-600 text-white shadow-lg shadow-plum-600/30 hover:bg-plum-700;
+}
+@utility btn-outline {
+  @apply bg-white text-plum-700 ring-2 ring-plum-200 hover:bg-plum-50 hover:ring-plum-400;
+}
+@utility btn-light {
+  @apply bg-white text-plum-800 shadow-lg hover:bg-brand-50;
+}
+@utility btn-ghost {
+  @apply text-white ring-2 ring-white/60 hover:bg-white hover:text-plum-800;
+}
+@utility btn-whatsapp {
+  @apply bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 hover:bg-emerald-600;
+}
+
+@utility chip {
+  @apply inline-flex items-center gap-1.5 rounded-full bg-plum-50 px-3 py-1 text-sm font-semibold text-plum-700;
+}
+
+/* ───────────── Animaciones ───────────── */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+[data-reveal='left'] {
+  transform: translateX(-40px);
+}
+[data-reveal='right'] {
+  transform: translateX(40px);
+}
+[data-reveal='zoom'] {
+  transform: scale(0.94);
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(12px);
+}
+.page-leave-to {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
 }
