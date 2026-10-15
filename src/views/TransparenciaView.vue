@@ -128,6 +128,13 @@ const grupos = [
           />
         </a>
       </div>
+      <RouterLink
+        to="/transparencia/2024"
+        class="mt-6 inline-flex min-h-11 items-center gap-2 font-bold text-plum-700 underline decoration-plum-300 underline-offset-4 transition hover:text-brand-600"
+      >
+        Explorar la documentación de 2024
+        <i class="mdi mdi-arrow-right" aria-hidden="true" />
+      </RouterLink>
     </section>
 
     <section class="section-y bg-white">

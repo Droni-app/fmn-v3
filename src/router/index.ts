@@ -117,6 +117,15 @@ const router = createRouter({
       meta: { title: 'Transparencia', description: 'Estados financieros e información legal.' },
     },
     {
+      path: '/transparencia/2024',
+      component: () => import('@/views/Transparencia2024View.vue'),
+      meta: {
+        title: 'Transparencia 2024',
+        description:
+          'Consulta y descarga el expediente legal y tributario 2024 de la Fundación Mariana Novoa.',
+      },
+    },
+    {
       path: '/voluntariado',
       component: () => import('@/views/VoluntariadoView.vue'),
       meta: {

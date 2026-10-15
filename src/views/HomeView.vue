@@ -7,9 +7,7 @@ import { links, pub } from '@/services/site'
 
 import imgSocialfoto from '@/assets/home/socialfoto.webp'
 import imgCasaFundacion from '@/assets/home/casaFundacion.webp'
-import imgOds from '@/assets/home/ods.webp'
 import imgMarianita from '@/assets/home/marianita.webp'
-import imgImpacto from '@/assets/home/impacto.webp'
 import imgBannerFiltro from '@/assets/home/banner-filtro.webp'
 import imgPreventivo from '@/assets/ejes/ejepreventivo01.webp'
 import imgSocial from '@/assets/ejes/padrino.webp'
@@ -17,9 +15,8 @@ import imgSocial from '@/assets/ejes/padrino.webp'
 import fotoHortensia from '@/assets/home/equipo/FOTO-HORTENSIA-ESPITALETA.webp'
 import fotoLina from '@/assets/home/equipo/FOTO-LINA-VILLAMIL.webp'
 import fotoOlga from '@/assets/home/equipo/FOTO-OLGA-BAQUERO.webp'
-import fotoCarol from '@/assets/home/equipo/FOTO-CAROL-CALDERON.webp'
+import fotoJuanMarquez from '@/assets/home/equipo/JuanMarquez.webp'
 import fotoCristian from '@/assets/home/equipo/FOTO-CRISTIAN-SOLANO.webp'
-import fotoSantiago from '@/assets/home/equipo/FOTO-SANTIAGO-SALGADO.webp'
 import fotoSteven from '@/assets/home/equipo/FOTO-STEVEN-RATIVA.webp'
 import fotoWendy from '@/assets/home/equipo/FOTO-WENDY-IMBRETH.webp'
 
@@ -27,15 +24,10 @@ const equipo = [
   { nombre: 'Hortensia Espitaleta', cargo: 'Directora', foto: fotoHortensia },
   { nombre: 'Lina Villamil', cargo: 'Coordinadora General', foto: fotoLina },
   { nombre: 'Olga Lucía Baquero', cargo: 'Directora Científica', foto: fotoOlga },
-  { nombre: 'Carol Calderón', cargo: 'Coordinadora Programa Social', foto: fotoCarol },
   { nombre: 'Cristian Solano', cargo: 'Área Contable y Administrativa', foto: fotoCristian },
-  {
-    nombre: 'Santiago Salgado',
-    cargo: 'Entrenador "Tras las Huellas de Diego"',
-    foto: fotoSantiago,
-  },
   { nombre: 'Steven Rátiva', cargo: 'Coordinador de Comunicaciones', foto: fotoSteven },
   { nombre: 'Wendy Imbreth', cargo: 'Docente de Artes', foto: fotoWendy },
+  { nombre: 'Juan Marquez', cargo: ' ', foto: fotoJuanMarquez }
 ]
 
 const pilares = [
@@ -397,22 +389,6 @@ const aliados = Object.keys(aliadosModules)
           alt="Casa de la Fundación Mariana Novoa en Altos de Serrezuela"
           loading="lazy"
           class="w-full rounded-[2rem] shadow-2xl"
-        />
-      </div>
-      <div class="mt-16 grid gap-8">
-        <img
-          v-reveal
-          :src="imgOds"
-          alt="Impactamos en 12 Objetivos de Desarrollo Sostenible"
-          loading="lazy"
-          class="w-full"
-        />
-        <img
-          v-reveal
-          :src="imgImpacto"
-          alt="Objetivos de Desarrollo Sostenible en los que impactamos"
-          loading="lazy"
-          class="mx-auto w-full max-w-4xl"
         />
       </div>
     </section>
