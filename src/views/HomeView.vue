@@ -27,7 +27,7 @@ const equipo = [
   { nombre: 'Cristian Solano', cargo: 'Área Contable y Administrativa', foto: fotoCristian },
   { nombre: 'Steven Rátiva', cargo: 'Coordinador de Comunicaciones', foto: fotoSteven },
   { nombre: 'Wendy Imbreth', cargo: 'Docente de Artes', foto: fotoWendy },
-  { nombre: 'Juan Marquez', cargo: ' ', foto: fotoJuanMarquez }
+  { nombre: 'Juan Marquez', cargo: 'Docente del Proyecto Deportivo', foto: fotoJuanMarquez }
 ]
 
 const pilares = [
@@ -52,18 +52,18 @@ const pilares = [
 ]
 
 const impacto = [
-  { valor: 8047, texto: 'personas capacitadas', periodo: '2007 – 2025' },
-  { valor: 1320, texto: 'niños, niñas y adolescentes atendidos', periodo: '2014 – mayo 2025' },
-  { valor: 770, texto: 'familias atendidas', periodo: '2014 – mayo 2025' },
-  { valor: 60, texto: 'adultos mayores atendidos', periodo: '2022 – mayo 2025' },
+  { valor: 8493, texto: 'personas capacitadas', periodo: '2007 - 2026' },
+  { valor: 1410, texto: 'niños, niñas y adolescentes atendidos', periodo: '2014 - noviembre 2026' },
+  { valor: 854, texto: 'familias atendidas', periodo: '2014 - noviembre 2026' },
+  { valor: 85, texto: 'adultos mayores atendidos', periodo: '2022 - noviembre 2026' },
   {
-    valor: 2365,
+    valor: 2600,
     texto: 'talleres de arte para niños, niñas y adolescentes',
-    periodo: '2014 – mayo 2025',
+    periodo: '2014 - noviembre 2026',
   },
-  { valor: 711, texto: 'entrenamientos de running y atletismo', periodo: '2019 – mayo 2025' },
-  { valor: 720, texto: 'voluntarios en actividades de la fundación', periodo: '2014 – mayo 2025' },
-  { valor: 121, texto: 'voluntariados corporativos', periodo: '2014 – mayo 2025' },
+  { valor: 852, texto: 'entrenamientos de running y atletismo', periodo: '2019 - noviembre 2026' },
+  { valor: 745, texto: 'voluntarios en actividades de la fundación', periodo: '2014 - noviembre 2026' },
+  { valor: 130, texto: 'voluntariados corporativos', periodo: '2014 - noviembre 2026' },
 ]
 
 const valores = [
@@ -237,7 +237,7 @@ const aliados = Object.keys(aliadosModules)
             <YoutubeLite id="CEqVym8y8oE" title="Fundación Mariana Novoa" class="sm:col-span-2" />
             <YoutubeLite
               id="Q6D11e4UKRQ"
-              title="Fundación Mariana Novoa – Historia"
+              title="Fundación Mariana Novoa - Historia"
               class="sm:col-span-2"
             />
           </div>
