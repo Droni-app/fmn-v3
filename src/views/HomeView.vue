@@ -10,7 +10,13 @@ import imgCasaFundacion from '@/assets/home/casaFundacion.webp'
 import imgMarianita from '@/assets/home/marianita.webp'
 import imgBannerFiltro from '@/assets/home/banner-filtro.webp'
 import imgPreventivo from '@/assets/ejes/ejepreventivo01.webp'
-import imgSocial from '@/assets/ejes/padrino.webp'
+import imgSocial from '@/assets/home/FotoProyectoSocial.webp'
+
+import capDisciplinaPositiva from '@/assets/home/capacitaciones/TallerdeDisciplinaPositivaVirtual.webp'
+import capAuPairNov from '@/assets/home/capacitaciones/AU_PAIR_NOV_28.jpg'
+import capAuPairEne from '@/assets/home/capacitaciones/PrimerosAuxilios2027.jpg'
+import capOpes from '@/assets/home/capacitaciones/OPES_2027.jpg'
+import capAuPairFeb from '@/assets/home/capacitaciones/AUPAIR_FEBRERO_2027.jpg'
 
 import fotoHortensia from '@/assets/home/equipo/FOTO-HORTENSIA-ESPITALETA.webp'
 import fotoLina from '@/assets/home/equipo/FOTO-LINA-VILLAMIL.webp'
@@ -93,23 +99,48 @@ const ejes = [
   },
 ]
 
-const talleres = [
-  {
-    image: pub('/img/talleres/taller01-herramientas-de-crianza-basadas-en-el-respeto.webp'),
-    title: 'Herramientas de crianza basadas en el respeto',
-  },
-  {
-    image: pub('/img/talleres/taller02-primeros-auxilios-y-rcp.webp'),
-    title: 'Primeros auxilios y RCP',
-  },
-  {
-    image: pub('/img/talleres/taller03-operaciones-de-estructuras-similares.webp'),
-    title: 'Operación de piscinas y estructuras similares',
-  },
-  { image: pub('/img/talleres/taller04-salvamento-acuatico.webp'), title: 'Salvamento acuático' },
+const capacitaciones = [
   {
     image: pub('/img/talleres/taller05-primeros-auxilios-psicologicos.webp'),
     title: 'Primeros auxilios psicológicos',
+    date: 'Fechas abiertas',
+    time: 'Agenda tu taller con nosotros',
+  },
+  {
+    image: pub('/img/talleres/taller04-salvamento-acuatico.webp'),
+    title: 'Salvamento acuático',
+    date: 'Fechas abiertas',
+    time: 'Agenda tu taller con nosotros',
+  },
+  {
+    image: capDisciplinaPositiva,
+    title: 'Taller de Disciplina Positiva: preparando mi maleta para ellos',
+    date: 'Sábado 28 de noviembre de 2026',
+    time: '5:00 pm a 7:30 pm · Virtual',
+  },
+  {
+    image: capAuPairNov,
+    title: 'Primeros auxilios y RCP para Au Pair',
+    date: 'Sábado 28 de noviembre de 2026',
+    time: '8:00 am a 4:00 pm',
+  },
+  {
+    image: capAuPairEne,
+    title: 'Primeros auxilios y RCP para Au Pair',
+    date: 'Sábado 30 de enero de 2027',
+    time: '8:00 am a 4:00 pm',
+  },
+  {
+    image: capOpes,
+    title: 'Curso de operación de piscinas y estructuras similares',
+    date: 'Febrero 15 y 22 / Marzo 1 y 8 de 2027',
+    time: '11 módulos · Teórico-práctico',
+  },
+  {
+    image: capAuPairFeb,
+    title: 'Primeros auxilios y RCP para Au Pair',
+    date: 'Sábado 27 de febrero de 2027',
+    time: '8:00 am a 4:00 pm',
   },
 ]
 
@@ -117,9 +148,25 @@ const aliadosModules = import.meta.glob<string>('../assets/home/aliados/*.webp',
   eager: true,
   import: 'default',
 })
-const aliados = Object.keys(aliadosModules)
-  .sort()
-  .map((k) => aliadosModules[k]!)
+const institucionesModules = import.meta.glob<string>(
+  '../assets/home/aliados/instituciones/*.webp',
+  { eager: true, import: 'default' },
+)
+// El nombre del archivo (p. ej. "colegio-andino.webp") se usa como texto alternativo.
+const nombreDesdeArchivo = (path: string) =>
+  (path.split('/').pop() ?? '')
+    .replace(/\.webp$/, '')
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase())
+
+const aliados = [
+  ...Object.keys(institucionesModules)
+    .sort()
+    .map((k) => ({ src: institucionesModules[k]!, alt: nombreDesdeArchivo(k) })),
+  ...Object.keys(aliadosModules)
+    .sort()
+    .map((k, i) => ({ src: aliadosModules[k]!, alt: `Aliado ${i + 1}` })),
+]
 </script>
 
 <template>
@@ -345,25 +392,38 @@ const aliados = Object.keys(aliadosModules)
           </RouterLink>
         </div>
         <div
-          class="-mx-4 mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-5"
+          class="-mx-4 mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-4"
         >
           <RouterLink
-            v-for="(taller, i) in talleres"
-            :key="taller.title"
+            v-for="(cap, i) in capacitaciones"
+            :key="cap.image"
             v-reveal="i * 80"
             to="/talleres"
-            class="group relative w-[75%] shrink-0 snap-center overflow-hidden rounded-3xl shadow-lg sm:w-auto"
+            class="group flex w-[75%] shrink-0 snap-center flex-col overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-plum-900/5 transition duration-300 hover:-translate-y-1 hover:shadow-2xl sm:w-auto"
           >
-            <img
-              :src="taller.image"
-              :alt="taller.title"
-              loading="lazy"
-              class="aspect-square w-full object-cover transition duration-700 group-hover:scale-110"
-            />
-            <div
-              class="absolute inset-0 flex items-end bg-gradient-to-t from-plum-900/90 via-plum-900/10 to-transparent p-5"
-            >
-              <p class="font-display leading-snug font-bold text-white">{{ taller.title }}</p>
+            <div class="overflow-hidden">
+              <img
+                :src="cap.image"
+                :alt="`${cap.title} – ${cap.date}`"
+                loading="lazy"
+                class="aspect-square w-full object-cover transition duration-700 group-hover:scale-105"
+              />
+            </div>
+            <div class="flex flex-1 flex-col p-5">
+              <h3 class="font-display leading-snug font-bold text-plum-900">{{ cap.title }}</h3>
+              <p class="mt-3 flex items-start gap-2 text-sm font-semibold text-plum-700">
+                <i class="mdi mdi-calendar-month-outline text-lg leading-none" />
+                {{ cap.date }}
+              </p>
+              <p class="mt-1 flex items-start gap-2 text-sm text-plum-900/60">
+                <i class="mdi mdi-clock-outline text-lg leading-none" />
+                {{ cap.time }}
+              </p>
+              <span
+                class="mt-auto inline-flex items-center gap-1 pt-4 text-sm font-bold text-plum-700 group-hover:gap-2"
+              >
+                Más información <i class="mdi mdi-arrow-right transition-all" />
+              </span>
             </div>
           </RouterLink>
         </div>
@@ -487,13 +547,13 @@ const aliados = Object.keys(aliadosModules)
           class="flex w-max animate-marquee gap-12 group-hover:[animation-play-state:paused] md:gap-16"
         >
           <li
-            v-for="(src, i) in [...aliados, ...aliados]"
+            v-for="(aliado, i) in [...aliados, ...aliados]"
             :key="i"
             :aria-hidden="i >= aliados.length"
           >
             <img
-              :src="src"
-              :alt="i < aliados.length ? `Aliado ${i + 1}` : ''"
+              :src="aliado.src"
+              :alt="i < aliados.length ? aliado.alt : ''"
               loading="lazy"
               class="h-16 w-32 object-contain opacity-70 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0 md:h-20 md:w-40"
             />

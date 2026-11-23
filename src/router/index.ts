@@ -37,7 +37,16 @@ const router = createRouter({
       path: '/congreso',
       component: () => import('@/views/CongresoView.vue'),
       meta: {
-        title: 'IV Congreso Internacional para la Prevención de los Ahogamientos',
+        title: 'V Congreso Internacional para la Prevención de los Ahogamientos',
+        description:
+          'V Congreso Internacional para la prevención de los ahogamientos. 26, 27 y 28 de julio de 2027, Medellín, Colombia.',
+      },
+    },
+    {
+      path: '/congreso/2026',
+      component: () => import('@/views/Congreso2026View.vue'),
+      meta: {
+        title: 'IV Congreso Internacional para la Prevención de los Ahogamientos (2026)',
         description:
           'IV Congreso Internacional para la prevención de los ahogamientos. 24 al 26 de agosto de 2026, Piscilago Colsubsidio.',
       },
@@ -125,6 +134,15 @@ const router = createRouter({
           'Consulta y descarga el expediente legal y tributario 2024 de la Fundación Mariana Novoa.',
       },
     },
+    ...(['2025', '2024'] as const).map((year) => ({
+      path: `/transparencia/gestion/${year}`,
+      component: () => import('@/views/InformeGestionView.vue'),
+      props: { year },
+      meta: {
+        title: `Informe de gestión ${year}`,
+        description: `Resumen del Informe de Gestión Anual ${year} de la Fundación Mariana Novoa: cifras, capacitaciones, congreso y programa social. Descarga el PDF.`,
+      },
+    })),
     {
       path: '/voluntariado',
       component: () => import('@/views/VoluntariadoView.vue'),

@@ -2,6 +2,9 @@
 import PageHero from '@/components/PageHero.vue'
 import SectionHeading from '@/components/SectionHeading.vue'
 import { pub } from '@/services/site'
+import { aniosInformesGestion, informesGestion } from '@/services/informesGestion'
+
+const informes = aniosInformesGestion.map((anio) => informesGestion[anio]!)
 
 const documentos = [
   {
@@ -135,6 +138,42 @@ const grupos = [
         Explorar la documentación de 2024
         <i class="mdi mdi-arrow-right" aria-hidden="true" />
       </RouterLink>
+    </section>
+
+    <section class="section-y container-page pt-0!">
+      <div>
+        <SectionHeading align="left" eyebrow="Resultados" title="Informes de gestión" />
+        <div class="grid gap-6 md:grid-cols-2">
+          <RouterLink
+            v-for="(informe, i) in informes"
+            :key="informe.anio"
+            v-reveal="i * 120"
+            :to="`/transparencia/gestion/${informe.anio}`"
+            class="card card-hover group grid overflow-hidden sm:grid-cols-[11rem_1fr]"
+          >
+            <div class="grid place-items-center bg-plum-50 p-5">
+              <img
+                :src="informe.portada"
+                :alt="`Portada del Informe de Gestión Anual ${informe.anio}`"
+                loading="lazy"
+                class="max-h-48 w-auto rounded-lg shadow-lg transition duration-500 group-hover:scale-105"
+              />
+            </div>
+            <div class="flex flex-col p-6">
+              <p class="font-display text-4xl font-black text-brand-500">{{ informe.anio }}</p>
+              <h3 class="mt-1 font-display text-lg leading-snug font-bold text-plum-800">
+                {{ informe.titulo }}
+              </h3>
+              <p class="mt-2 line-clamp-3 text-sm text-ink/65">{{ informe.resumen }}</p>
+              <span
+                class="mt-auto inline-flex items-center gap-1 pt-4 font-display text-sm font-bold text-plum-700 group-hover:gap-2"
+              >
+                Ver presentación <i class="mdi mdi-arrow-right transition-all" />
+              </span>
+            </div>
+          </RouterLink>
+        </div>
+      </div>
     </section>
 
     <section class="section-y bg-white">

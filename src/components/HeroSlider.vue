@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import bannerCongreso from '@/assets/congreso/2026/banner-lanzamientov2.webp'
+import bannerCongreso from '@/assets/congreso/2027/bannerHeroCongreso2027.webp'
 import { links, pub } from '@/services/site'
 
 interface Slide {
@@ -13,7 +13,7 @@ const slides: Slide[] = [
   {
     image: bannerCongreso,
     link: '/congreso',
-    alt: 'IV Congreso Internacional para la prevención de los ahogamientos, 24 al 26 de agosto de 2026',
+    alt: 'V Congreso Internacional para la prevención de los ahogamientos, Medellín, 26, 27 y 28 de julio de 2027',
   },
   {
     image: pub('/img/slides/02.webp'),
